@@ -1,0 +1,26 @@
+.theme-toggle {
+  position: absolute;
+  right: var(--space-2xl);
+  bottom: var(--space-2xl);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--space-sm);
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: rotate(15deg) scale(1.5);
+  background-color: rgba(0, 0, 0, 0);
+  opacity: 0.5;
+}
+
+.theme-toggle__icon {
+  transition: color 0.3s ease;
+}

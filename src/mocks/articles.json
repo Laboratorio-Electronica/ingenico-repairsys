@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "title": { "es": "Introducción a la Automatización", "en": "Introduction to Automation" },
+    "description": { "es": "Descubre cómo la automatización puede mejorar tus procesos y ahorrar tiempo.", "en": "Discover how automation can enhance your processes and save time." },
+    "link": "/blog/introduccion-automatizacion",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT63Te7cSF1dobjpR5aauKVrBpqLrrNL8v6og&s",
+    "date": "2023-10-01",
+    "tags": [1, 2]
+  },
+  {
+    "id": 2,
+    "title": { "es": "Mejores Prácticas en Desarrollo Web", "en": "Best Practices in Web Development" },
+    "description": { "es": "Aprende las mejores prácticas para construir aplicaciones web modernas.", "en": "Learn the best practices for building modern web applications." },
+    "link": "/blog/mejores-practicas-desarrollo-web",
+    "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+    "date": "2023-10-15",
+    "tags": [2]
+  },
+  {
+    "id": 3,
+    "title": { "es": "Tendencias Tecnológicas 2023", "en": "Tech Trends 2023" },
+    "description": { "es": "Explora las tendencias tecnológicas más importantes de este año.", "en": "Explore the most significant tech trends of this year." },
+    "link": "/blog/tendencias-tecnologicas-2023",
+    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475",
+    "date": "2023-10-25",
+    "tags": [3, 4]
+  },
+  {
+    "id": 4,
+    "title": { "es": "Automatización con Node.js y Raspberry Pi", "en": "Automation with Node.js and Raspberry Pi" },
+    "description": { "es": "Conecta el mundo físico con el digital usando Node.js y Raspberry Pi.", "en": "Connect the physical world with the digital using Node.js and Raspberry Pi." },
+    "link": "/blog/automatizacion-nodejs-raspberry",
+    "image": "https://i.imgur.com/3cyqTnT.jpeg",
+    "date": "2023-11-10",
+    "tags": [1, 5, 6]
+  },
+  {
+    "id": 5,
+    "title": { "es": "Inteligencia Artificial para Principiantes", "en": "AI for Beginners" },
+    "description": { "es": "Una guía para empezar en el mundo de la inteligencia artificial.", "en": "A guide to getting started with artificial intelligence." },
+    "link": "/blog/ia-para-principiantes",
+    "image": "https://images.unsplash.com/photo-1581091215360-1e35b9079dcf",
+    "date": "2023-11-20",
+    "tags": [7]
+  },
+  {
+    "id": 6,
+    "title": { "es": "Automatización de Tareas Repetitivas", "en": "Automating Repetitive Tasks" },
+    "description": { "es": "Aprende a usar scripts y herramientas para automatizar tareas rutinarias.", "en": "Learn how to use scripts and tools to automate routine tasks." },
+    "link": "/blog/automatizacion-tareas-repetitivas",
+    "image": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5",
+    "date": "2023-12-01",
+    "tags": [1, 2]
+  },
+  {
+    "id": 7,
+    "title": { "es": "Node.js Avanzado", "en": "Advanced Node.js" },
+    "description": { "es": "Domina técnicas avanzadas de Node.js para aplicaciones de alto rendimiento.", "en": "Master advanced Node.js techniques for high-performance applications." },
+    "link": "/blog/nodejs-avanzado",
+    "image": "https://images.unsplash.com/photo-1517430816045-df4b7de11d0b",
+    "date": "2023-12-05",
+    "tags": [2, 5]
+  },
+  {
+    "id": 8,
+    "title": { "es": "Integración de APIs REST", "en": "REST API Integration" },
+    "description": { "es": "Cómo conectar tu aplicación con servicios externos usando APIs REST.", "en": "How to connect your app to external services using REST APIs." },
+    "link": "/blog/integracion-apis-rest",
+    "image": "https://images.unsplash.com/photo-1503387762-592deb58ef4e",
+    "date": "2023-12-10",
+    "tags": [2, 3]
+  },
+  {
+    "id": 9,
+    "title": { "es": "Automatización del Hogar con IoT", "en": "Home Automation with IoT" },
+    "description": { "es": "Transforma tu hogar con sensores y dispositivos IoT.", "en": "Transform your home with sensors and IoT devices." },
+    "link": "/blog/automatizacion-hogar-iot",
+    "image": "https://images.unsplash.com/photo-1581091012184-73b1e9db0a35",
+    "date": "2023-12-15",
+    "tags": [1, 6]
+  },
+  {
+    "id": 10,
+    "title": { "es": "Desarrollo Frontend Moderno", "en": "Modern Frontend Development" },
+    "description": { "es": "Frameworks y herramientas para el desarrollo frontend actual.", "en": "Frameworks and tools for current frontend development." },
+    "link": "/blog/desarrollo-frontend-moderno",
+    "image": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d",
+    "date": "2023-12-20",
+    "tags": [2, 3]
+  },
+  {
+    "id": 11,
+    "title": { "es": "Pruebas Automatizadas con Jest", "en": "Automated Testing with Jest" },
+    "description": { "es": "Cómo escribir pruebas unitarias y de integración con Jest.", "en": "How to write unit and integration tests with Jest." },
+    "link": "/blog/pruebas-automatizadas-jest",
+    "image": "https://images.unsplash.com/photo-1517430816045-df4b7de11d0b",
+    "date": "2023-12-25",
+    "tags": [2, 7]
+  },
+  {
+    "id": 12,
+    "title": { "es": "Seguridad en Aplicaciones Web", "en": "Web Application Security" },
+    "description": { "es": "Mejores prácticas para proteger tus aplicaciones web.", "en": "Best practices to secure your web applications." },
+    "link": "/blog/seguridad-aplicaciones-web",
+    "image": "https://images.unsplash.com/photo-1518770660439-4636190af475",
+    "date": "2024-01-01",
+    "tags": [3, 7]
+  }
+]

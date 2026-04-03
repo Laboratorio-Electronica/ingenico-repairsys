@@ -1,0 +1,14 @@
+@use '../tokens/radius' as *;
+
+.input {
+  padding: 12px 18px;
+  border: 2px solid var(--border);
+  border-radius: $radius-sm;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.input:focus {
+  border-color: var(--primary);
+  outline: none;
+}

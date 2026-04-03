@@ -1,0 +1,17 @@
+@use '../tokens/colors' as *;
+
+[data-theme='dark'] {
+  --bg: #{$bg-dark};
+  --surface: #{$surface-dark};
+  --surface-alt: #{$surface-alt-dark};
+
+  --text: #{$text-dark};
+  --border: #{$border-dark};
+
+  --primary: #4da3ff; // override intencional
+  --primary-dark: #1f6fb2;
+  --secondary: #{$secondary-500};
+
+  --success: #4dd17c;
+  --error: #ff6b6b;
+}

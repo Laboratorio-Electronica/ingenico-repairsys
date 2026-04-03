@@ -1,0 +1,37 @@
+/* ==================================================
+  🧾 FORM FIELD (Molecule Base)
+  --------------------------------------------------
+  Wrapper estructural para inputs, selects o switches.
+  Provee:
+  - Label consistente
+  - Espaciado vertical uniforme
+  - Mensaje de error estandarizado
+  - Integración con design tokens
+================================================== */
+
+.form-field {
+
+  /* Contenedor vertical */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+
+
+  /* ===============================
+    🏷 Label
+  =============================== */
+  &__label {
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-normal);
+  }
+
+
+  /* ===============================
+    ❌ Error message
+  =============================== */
+  &__error {
+    font-size: var(--font-size-caption);
+    color: var(--color-text-error);
+  }
+}

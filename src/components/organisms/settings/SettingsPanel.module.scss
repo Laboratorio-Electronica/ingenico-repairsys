@@ -1,0 +1,276 @@
+.settings {
+
+  /* ===== FLOATING CONTAINER ===== */
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+
+  /* ===============================
+    BUTTON
+  =============================== */
+  &__button {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+    color: var(--text);
+
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  &__button:hover {
+    background: var(--surface-alt);
+  }
+
+  /* ===============================
+    PANEL
+  =============================== */
+  &__panel {
+    width: 220px;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    padding: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  /* ===============================
+    ITEM
+  =============================== */
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 0.85rem;
+  }
+
+  /* ===============================
+    ICON
+  =============================== */
+  &__icon {
+    font-size: 1rem;
+    color: var(--text);
+  }
+
+  /* ===============================
+    SWITCH
+  =============================== */
+  &__switch {
+    position: relative;
+    width: 40px;
+    height: 22px;
+  }
+
+  &__switch-input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  &__switch-slider {
+    position: absolute;
+    inset: 0;
+
+    background: var(--surface-alt);
+    border-radius: 999px;
+
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  &__switch-slider::before {
+    content: '';
+    position: absolute;
+
+    width: 16px;
+    height: 16px;
+
+    left: 3px;
+    top: 3px;
+
+    background: white;
+    border-radius: 50%;
+
+    transition: 0.2s;
+  }
+
+  /* ACTIVE */
+  &__switch-input:checked + &__switch-slider {
+    background: var(--primary);
+  }
+
+  &__switch-input:checked + &__switch-slider::before {
+    transform: translateX(18px);
+  }
+
+}
+
+@media (min-width: 640px) {
+
+  .settings {
+
+    &__panel {
+      width: 240px;
+    }
+
+  }
+
+}
+
+// // @use '@/styles/abstracts/mixins' as *;
+
+// /* ==================================================
+//   ⚙ SETTINGS PANEL SYSTEM
+//   --------------------------------------------------
+//   Incluye:
+//   - Botón flotante de configuración
+//   - Panel desplegable
+//   - Switch personalizado
+//   - Formularios internos
+//   Implementado con:
+//   - Placeholders reutilizables
+//   - Design tokens
+//   - Mixins del sistema
+// ================================================== */
+
+
+// /* ===============================
+//   🎛 SWITCH VARIABLES
+//   --------------------------------------------------
+//   Dimensiones internas del switch.
+// ================================= */
+// $button-size: 4.8rem;          // 48px
+// $switch-height: 2.6rem;        // 26px
+// $switch-knob-size: 2rem;       // 20px
+// $knob-offset: var(--space-xxs); // 4px
+
+
+// /* ===============================
+//   ♻ PLACEHOLDERS (Reusable)
+// ================================= */
+
+// /* Base para contenedores tipo panel */
+// %panel-container-base {
+//   position: absolute;
+//   right: 0;
+
+//   display: flex;
+//   flex-direction: column;
+//   gap: var(--space-md);
+
+//   padding: var(--space-md);
+//   background: var(--color-bg-container);
+//   border: 1px solid var(--color-border);
+//   border-radius: var(--radius-lg);
+
+//   box-shadow: 0 var(--space-xs) var(--space-lg) rgba(0, 0, 0, 0.15);
+// }
+
+// /* Base para formularios internos */
+// %form-base {
+//   // @include flex-column(flex-start, flex-start, var(--space-xs));
+// }
+
+// /* Base para slider del switch */
+// %switch-slider-base {
+//   position: absolute;
+//   inset: 0;
+//   cursor: pointer;
+
+//   background-color: var(--color-bg);
+//   border-radius: var(--radius-full);
+
+//   transition: var(--transition-default);
+// }
+
+
+// /* ===============================
+//   ⚙ SETTINGS FLOATING BUTTON
+// ================================= */
+// .settings {
+//   position: fixed;
+//   z-index: 9999;
+
+//   &-button {
+//     bottom: 10px;
+//     right: 10px;
+//   }
+
+//   &-menu {
+//     top: var(--space-lg);
+//     right: 0;
+//   }
+
+//   &__button {
+//     background-color: var(--color-bg-container);
+//     color: var(--color-text);
+//   }
+// }
+
+
+// /* ===============================
+//   📦 PANEL
+// ================================= */
+// .panel {
+
+//   &__container {
+//     @extend %panel-container-base;
+
+//     &-button {
+//       bottom: var(--space-4xl);
+//     }
+
+//     &-menu {
+//       top: var(--space-4xl);
+//     }
+//   }
+
+//   &__form {
+//     @extend %form-base;
+//     font-size: var(--font-size-caption);
+//   }
+
+//   &__switchWrapper {
+//     display: flex;
+//     align-items: center;
+//     gap: var(--space-xs);
+//   }
+
+//   &__icon {
+//     font-size: var(--font-size-body-md);
+//     color: var(--color-text-soft);
+//   }
+// }
+
+
+// /* ===============================
+//   📱 RESPONSIVE
+// ================================= */
+// // @include respond-mobile {
+// //   .settings {
+// //     display: none;
+// //   }
+// // }

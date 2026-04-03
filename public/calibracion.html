@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>CALIBRAP INGENICO · Validación + Gestión</title>
+    <style>
+        /* (los mismos estilos de siempre, no los repito por brevedad, pero están en el código completo) */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background: #e6f0fa; padding: 20px; }
+        .app { max-width: 1400px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,40,80,0.2); overflow: hidden; border: 1px solid #b8d1f0; }
+        .header { background: linear-gradient(145deg, #004a8f, #002b54); color: white; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #ffcc00; }
+        .header h1 { font-size: 28px; display: flex; align-items: center; gap: 10px; }
+        .header h1 span { background: #ffcc00; color: #002b54; font-size: 14px; padding: 4px 10px; border-radius: 30px; font-weight: bold; }
+        .user-info { display: flex; align-items: center; gap: 20px; }
+        .user-badge { background: rgba(255,255,255,0.15); padding: 8px 18px; border-radius: 30px; font-size: 14px; border: 1px solid rgba(255,255,255,0.3); }
+        .logout-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 8px 18px; border-radius: 30px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .logout-btn:hover { background: rgba(255,255,255,0.3); }
+        .nav { background: #f0f7ff; padding: 15px 30px; border-bottom: 2px solid #b8d1f0; display: flex; gap: 10px; flex-wrap: wrap; }
+        .nav button { padding: 12px 25px; border: none; background: transparent; color: #004a8f; font-weight: 700; font-size: 15px; border-radius: 40px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
+        .nav button:hover { background: #d4e3ff; }
+        .nav button.active { background: #004a8f; color: white; box-shadow: 0 5px 10px rgba(0,74,143,0.3); }
+        .content { padding: 30px; background: white; }
+        h2 { color: #004a8f; font-size: 22px; margin-bottom: 20px; border-left: 6px solid #ffcc00; padding-left: 15px; }
+        h3 { color: #004a8f; font-size: 18px; margin: 20px 0 10px; }
+        .step-card { background: #f5faff; border-radius: 18px; padding: 25px; margin-bottom: 25px; border: 1px solid #c2d9f0; box-shadow: 0 5px 10px rgba(0,74,143,0.05); }
+        select, input, textarea { padding: 12px 18px; border: 2px solid #c2d9f0; border-radius: 12px; font-size: 15px; width: 100%; max-width: 400px; background: white; transition: 0.2s; }
+        select:focus, input:focus, textarea:focus { border-color: #004a8f; outline: none; box-shadow: 0 0 0 3px rgba(0,74,143,0.1); }
+        .torque-grid { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+        .torque-btn { background: white; border: 2px solid #c2d9f0; border-radius: 16px; padding: 15px 20px; min-width: 140px; text-align: center; cursor: pointer; transition: 0.2s; font-weight: 600; color: #004a8f; }
+        .torque-btn:hover { border-color: #004a8f; background: #e3efff; transform: translateY(-2px); }
+        .torque-btn.selected { background: #004a8f; color: white; border-color: #004a8f; }
+        .torque-btn .small { font-size: 12px; font-weight: normal; color: #666; }
+        .torque-btn.selected .small { color: #ffcc00; }
+        .info-card { background: #ffffff; border-radius: 16px; padding: 20px; margin: 15px 0; border: 1px solid #b8d1f0; border-left: 6px solid #ffcc00; }
+        .info-row { display: flex; justify-content: space-between; margin: 8px 0; }
+        .info-label { font-weight: 600; color: #004a8f; }
+        .result-box { background: #f0f9ff; border-radius: 20px; padding: 25px; text-align: center; border: 2px solid #004a8f; margin: 20px 0; }
+        .result-status { font-size: 28px; font-weight: 800; margin-bottom: 10px; }
+        .result-status.ok { color: #28a745; }
+        .result-status.nok { color: #dc3545; }
+        .result-diff { font-size: 22px; color: #004a8f; font-weight: 600; }
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; margin: 30px 0; }
+        .btn { padding: 14px 28px; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 10px; }
+        .btn-primary { background: #004a8f; color: white; }
+        .btn-primary:hover { background: #002b54; transform: translateY(-2px); }
+        .btn-warning { background: #ffcc00; color: #002b54; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-excel { background: #1f7b4d; color: white; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .table-container { overflow-x: auto; margin: 30px 0; border-radius: 16px; border: 1px solid #b8d1f0; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #004a8f; color: white; padding: 14px; }
+        td { padding: 12px; border-bottom: 1px solid #d9e6f5; vertical-align: middle; }
+        .badge-ok { background: #d4edda; color: #155724; padding: 5px 12px; border-radius: 30px; font-weight: 600; }
+        .badge-nok { background: #f8d7da; color: #721c24; padding: 5px 12px; border-radius: 30px; font-weight: 600; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0; }
+        .stat { background: #f5faff; padding: 20px; border-radius: 16px; text-align: center; }
+        .stat-number { font-size: 32px; font-weight: 800; color: #004a8f; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; display: flex; align-items: center; justify-content: center; }
+        .modal-content { max-width: 600px; background: white; border-radius: 20px; padding: 25px; }
+        .modal-content video { width: 100%; border-radius: 12px; background: #000; }
+        .validation-box { background: #fff3cd; border-left: 6px solid #ffc107; padding: 15px; margin: 15px 0; border-radius: 12px; }
+        .mensaje-error { background: #f8d7da; color: #721c24; padding: 10px; border-radius: 8px; margin-top: 10px; text-align: center; }
+        .mensaje-exito { background: #d4edda; color: #155724; padding: 10px; border-radius: 8px; margin-top: 10px; text-align: center; }
+        .thumbnail { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; cursor: pointer; border: 2px solid #004a8f; margin-right: 5px; }
+        .image-preview-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 20000; display: flex; align-items: center; justify-content: center; }
+        .image-preview-modal img { max-width: 90%; max-height: 90%; border-radius: 12px; }
+        .filtros { display: flex; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
+        .filtros select, .filtros input { max-width: 200px; }
+        .btn-small { padding: 6px 12px; font-size: 14px; border-radius: 8px; border: none; cursor: pointer; }
+    </style>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // ========== DATOS INICIALES ==========
+        const inicialUsuarios = [
+            { id: 1, username: "wilson", password: "admin", nombre: "Wilson (Admin)", rol: "admin" },
+            { id: 2, username: "carlos", password: "sup", nombre: "Carlos (Supervisor)", rol: "supervisor" },
+            { id: 3, username: "adriana", password: "tec", nombre: "Adriana", rol: "tecnico" },
+            { id: 4, username: "sebastian", password: "tec", nombre: "Sebastián", rol: "tecnico" },
+        ];
+
+        const inicialBancos = [
+            { id: 1, nombre: "Workstation 1" },
+            { id: 2, nombre: "Workstation 2" },
+            { id: 3, nombre: "Workstation 3" },
+            { id: 4, nombre: "Workstation 4" }
+        ];
+
+        const inicialAtornilladores = [
+            { id: 1, serie: "ATN-001", modelo: "PS-55", bancoId: 1 },
+            { id: 2, serie: "ATN-002", modelo: "BLG-5000", bancoId: 1 },
+            { id: 3, serie: "ATN-003", modelo: "PS-55", bancoId: 2 },
+            { id: 4, serie: "ATN-004", modelo: "BLG-5000", bancoId: 2 },
+            { id: 5, serie: "ATN-005", modelo: "PS-55", bancoId: 3 },
+            { id: 6, serie: "ATN-006", modelo: "BLG-5000", bancoId: 3 },
+            { id: 7, serie: "ATN-007", modelo: "PS-55", bancoId: 4 },
+            { id: 8, serie: "ATN-008", modelo: "BLG-5000", bancoId: 4 }
+        ];
+
+        const inicialModelos = [
+            { id: 1, nombre: "IUC150B", familia: "Telium" },
+            { id: 2, nombre: "IUC160", familia: "Telium" },
+            { id: 3, nombre: "iWP2xx", familia: "Telium" },
+            { id: 4, nombre: "iSMPv4", familia: "Telium" },
+            { id: 5, nombre: "IMP6xx", familia: "Telium" },
+            { id: 6, nombre: "SMART1&2", familia: "Telium" },
+            { id: 7, nombre: "EFT930", familia: "Telium" },
+            { id: 8, nombre: "ML30/P30", familia: "Telium" },
+            { id: 9, nombre: "Telium Pass", familia: "Telium" },
+            { id: 10, nombre: "CAD30UPP", familia: "Telium" },
+            { id: 11, nombre: "CAD30UCR", familia: "Telium" },
+            { id: 12, nombre: "desk2500", familia: "Tetra" },
+            { id: 13, nombre: "Link2500", familia: "Tetra" },
+            { id: 14, nombre: "Move2500", familia: "Tetra" },
+            { id: 15, nombre: "Lane3000", familia: "Tetra" },
+            { id: 16, nombre: "Lane5000", familia: "Tetra" },
+            { id: 17, nombre: "IUP", familia: "Self" },
+            { id: 18, nombre: "IUR", familia: "Self" },
+            { id: 19, nombre: "IUC", familia: "Self" },
+            { id: 20, nombre: "DX4000", familia: "Axiom" },
+            { id: 21, nombre: "AXIUM", familia: "Axiom" }
+        ];
+
+        const inicialTorques = [
+            // Telium
+            { id: 1, familia: "Telium", torque: 0.055, tolerancia: 0.005, uso: "SCR / precisión (T4)" },
+            { id: 2, familia: "Telium", torque: 0.15, tolerancia: 0.02, uso: "Bottom cover IUC150B/IUC160 (T6)" },
+            { id: 3, familia: "Telium", torque: 0.165, tolerancia: 0.015, uso: "Battery module (T6)" },
+            { id: 4, familia: "Telium", torque: 0.22, tolerancia: 0.02, uso: "SMART1&2 (T8)" },
+            { id: 5, familia: "Telium", torque: 0.30, tolerancia: 0.02, uso: "Casing, PCBA, EFT930, ML30/P30 (T8)" },
+            { id: 6, familia: "Telium", torque: 1.00, tolerancia: 0.10, uso: "Sealing screw (T10)" },
+            { id: 7, familia: "Telium", torque: 0.20, tolerancia: 0.015, uso: "iSMPv4/IMP6xx casing (T5+)" },
+            { id: 8, familia: "Telium", torque: 0.10, tolerancia: 0.02, uso: "Telium Pass (T6)" },
+            { id: 9, familia: "Telium", torque: 0.20, tolerancia: 0.02, uso: "CAD30UCR (T8)" },
+            { id: 10, familia: "Telium", torque: 0.30, tolerancia: 0.02, uso: "CAD30UCR (T6)" },
+            { id: 11, familia: "Telium", torque: 0.70, tolerancia: 0.05, uso: "CAD30UPP nuts (5.5mm)" },
+            // Tetra
+            { id: 12, familia: "Tetra", torque: 0.055, tolerancia: 0.005, uso: "SCR / precisión" },
+            { id: 13, familia: "Tetra", torque: 0.15, tolerancia: 0.015, uso: "Módulos internos" },
+            { id: 14, familia: "Tetra", torque: 0.18, tolerancia: 0.018, uso: "Casing, pinshield" },
+            { id: 15, familia: "Tetra", torque: 0.30, tolerancia: 0.025, uso: "Bottom casing" },
+            { id: 16, familia: "Tetra", torque: 1.00, tolerancia: 0.10, uso: "Tornillo sellado" },
+            // Self
+            { id: 17, familia: "Self", torque: 0.13, tolerancia: 0.015, uso: "PCBA" },
+            { id: 18, familia: "Self", torque: 0.18, tolerancia: 0.018, uso: "Pinshield" },
+            { id: 19, familia: "Self", torque: 0.30, tolerancia: 0.025, uso: "Cover" },
+            { id: 20, familia: "Self", torque: 0.35, tolerancia: 0.03, uso: "Display support" },
+            // Axiom
+            { id: 21, familia: "Axiom", torque: 0.18, tolerancia: 0.018, uso: "Casing (≈1.8 kgf.cm)" },
+            { id: 22, familia: "Axiom", torque: 0.21, tolerancia: 0.015, uso: "PCBA + iDMI (≈2.1 kgf.cm)" },
+            { id: 23, familia: "Axiom", torque: 0.30, tolerancia: 0.03, uso: "Casing T8 (0.3 N.m)" },
+            { id: 24, familia: "Axiom", torque: 0.10, tolerancia: 0.01, uso: "MSR T5 (0.10 N.m)" },
+            { id: 25, familia: "Axiom", torque: 0.20, tolerancia: 0.01, uso: "SAM door T6 (0.2 N.m)" },
+            { id: 26, familia: "Axiom", torque: 0.22, tolerancia: 0.015, uso: "Casing (2.2 kgf.cm)" },
+            { id: 27, familia: "Axiom", torque: 0.23, tolerancia: 0.02, uso: "Casing (2.3 kgf.cm)" },
+            { id: 28, familia: "Axiom", torque: 0.17, tolerancia: 0.02, uso: "Internal + Pinshield (1.7 kgf.cm)" },
+        ];
+
+        // Cargar de localStorage o usar inicial
+        const loadFromStorage = (key, initial) => {
+            try {
+                const stored = localStorage.getItem(key);
+                return stored ? JSON.parse(stored) : initial;
+            } catch { return initial; }
+        };
+
+        // Historial en localStorage
+        let historialGuardado = [];
+        try {
+            const stored = localStorage.getItem('calibraciones_historial');
+            historialGuardado = stored ? JSON.parse(stored) : [];
+        } catch (e) { }
+
+        // ========== COMPONENTE DE PREVISUALIZACIÓN DE IMAGEN ==========
+        function ImagePreview({ src, onClose }) {
+            return (
+                <div className="image-preview-modal" onClick={onClose}>
+                    <img src={src} alt="Preview" />
+                </div>
+            );
+        }
+
+        // ========== DECODIFICADOR DE 7 SEGMENTOS ==========
+        function decodeSevenSegmentAdvanced(imageData, x, y, ancho, alto) {
+            const segmentos = {
+                a: { x1: 0.2, y1: 0.1, x2: 0.8, y2: 0.2 },
+                b: { x1: 0.8, y1: 0.2, x2: 0.9, y2: 0.5 },
+                c: { x1: 0.8, y1: 0.5, x2: 0.9, y2: 0.8 },
+                d: { x1: 0.2, y1: 0.8, x2: 0.8, y2: 0.9 },
+                e: { x1: 0.1, y1: 0.5, x2: 0.2, y2: 0.8 },
+                f: { x1: 0.1, y1: 0.2, x2: 0.2, y2: 0.5 },
+                g: { x1: 0.2, y1: 0.45, x2: 0.8, y2: 0.55 }
+            };
+
+            let estado = {};
+            for (let seg in segmentos) {
+                const s = segmentos[seg];
+                const sx = Math.floor(x + ancho * s.x1);
+                const sy = Math.floor(y + alto * s.y1);
+                const sw = Math.max(1, Math.floor(ancho * (s.x2 - s.x1)));
+                const sh = Math.max(1, Math.floor(alto * (s.y2 - s.y1)));
+                
+                let suma = 0, count = 0;
+                for (let py = sy; py < sy + sh; py++) {
+                    for (let px = sx; px < sx + sw; px++) {
+                        const idx = (py * imageData.width + px) * 4;
+                        if (idx >= 0 && idx < imageData.data.length) {
+                            suma += imageData.data[idx];
+                            count++;
+                        }
+                    }
+                }
+                const brillo = count > 0 ? suma / count : 255;
+                estado[seg] = brillo < 128;
+            }
+
+            const digitos = {
+                'a,b,c,d,e,f': 0,
+                'b,c': 1,
+                'a,b,d,e,g': 2,
+                'a,b,c,d,g': 3,
+                'b,c,f,g': 4,
+                'a,c,d,f,g': 5,
+                'a,c,d,e,f,g': 6,
+                'a,b,c': 7,
+                'a,b,c,d,e,f,g': 8,
+                'a,b,c,d,f,g': 9
+            };
+
+            let activos = [];
+            for (let seg in estado) if (estado[seg]) activos.push(seg);
+            activos.sort();
+            const clave = activos.join(',');
+
+            return digitos[clave] !== undefined ? digitos[clave] : null;
+        }
+
+        // ========== COMPONENTE ESCÁNER ==========
+        function EscanerSieteSegmentos({ onClose, onCapture, valorReferencia, mensajeReferencia, toleranciaPorcentual = 3 }) {
+            const videoRef = useRef(null);
+            const [estado, setEstado] = useState('listo');
+            const [stream, setStream] = useState(null);
+            const [mensaje, setMensaje] = useState('');
+            const [capturedImage, setCapturedImage] = useState(null);
+            const [valorManual, setValorManual] = useState('');
+
+            useEffect(() => {
+                iniciarCamara();
+                return () => detenerCamara();
+            }, []);
+
+            const iniciarCamara = async () => {
+                try {
+                    const mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
+                    setStream(mediaStream);
+                    if (videoRef.current) videoRef.current.srcObject = mediaStream;
+                } catch (error) {
+                    setMensaje('❌ No se pudo acceder a la cámara');
+                    setEstado('error');
+                }
+            };
+
+            const detenerCamara = () => {
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    setStream(null);
+                }
+            };
+
+            const capturarYDecodificar = async () => {
+                if (!videoRef.current) return;
+                setEstado('procesando');
+                setMensaje('');
+
+                const video = videoRef.current;
+                const canvas = document.createElement('canvas');
+                canvas.width = 1280;
+                canvas.height = 720;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                const imageDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                setCapturedImage(imageDataUrl);
+
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imageData.data;
+                for (let i = 0; i < data.length; i += 4) {
+                    const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+                    data[i] = gray;
+                    data[i+1] = gray;
+                    data[i+2] = gray;
+                }
+
+                // Ecualización adaptativa (simplificada)
+                const ancho = canvas.width, alto = canvas.height;
+                const tiles = 4;
+                const tileW = Math.floor(ancho / tiles);
+                const tileH = Math.floor(alto / tiles);
+                const clipLimit = 40;
+                for (let ti = 0; ti < tiles; ti++) {
+                    for (let tj = 0; tj < tiles; tj++) {
+                        const startX = ti * tileW;
+                        const startY = tj * tileH;
+                        const endX = (ti === tiles-1) ? ancho : startX + tileW;
+                        const endY = (tj === tiles-1) ? alto : startY + tileH;
+                        
+                        let hist = new Array(256).fill(0);
+                        for (let y = startY; y < endY; y++) {
+                            for (let x = startX; x < endX; x++) {
+                                const idx = (y * ancho + x) * 4;
+                                hist[Math.round(data[idx])]++;
+                            }
+                        }
+                        let excess = 0;
+                        for (let i = 0; i < 256; i++) {
+                            if (hist[i] > clipLimit) {
+                                excess += hist[i] - clipLimit;
+                                hist[i] = clipLimit;
+                            }
+                        }
+                        const addEach = Math.floor(excess / 256);
+                        for (let i = 0; i < 256; i++) hist[i] += addEach;
+                        
+                        let cdf = [];
+                        let sum = 0;
+                        for (let i = 0; i < 256; i++) {
+                            sum += hist[i];
+                            cdf[i] = sum;
+                        }
+                        const minCdf = cdf.find(v => v > 0);
+                        for (let i = 0; i < 256; i++) {
+                            cdf[i] = Math.round((cdf[i] - minCdf) * 255 / (sum - minCdf));
+                        }
+                        
+                        for (let y = startY; y < endY; y++) {
+                            for (let x = startX; x < endX; x++) {
+                                const idx = (y * ancho + x) * 4;
+                                const val = Math.round(data[idx]);
+                                data[idx] = cdf[val];
+                                data[idx+1] = cdf[val];
+                                data[idx+2] = cdf[val];
+                            }
+                        }
+                    }
+                }
+
+                // Binarización OTSU
+                let histogram = new Array(256).fill(0);
+                for (let i = 0; i < data.length; i += 4) histogram[Math.round(data[i])] += 1;
+                let total = data.length / 4;
+                let sum = 0;
+                for (let t = 0; t < 256; t++) sum += t * histogram[t];
+                let sumB = 0, wB = 0, maxVariance = 0, threshold = 128;
+                for (let t = 0; t < 256; t++) {
+                    wB += histogram[t];
+                    if (wB === 0) continue;
+                    let wF = total - wB;
+                    if (wF === 0) break;
+                    sumB += t * histogram[t];
+                    let mB = sumB / wB;
+                    let mF = (sum - sumB) / wF;
+                    let variance = wB * wF * (mB - mF) * (mB - mF);
+                    if (variance > maxVariance) {
+                        maxVariance = variance;
+                        threshold = t;
+                    }
+                }
+                for (let i = 0; i < data.length; i += 4) {
+                    const val = data[i] > threshold ? 255 : 0;
+                    data[i] = val;
+                    data[i+1] = val;
+                    data[i+2] = val;
+                }
+
+                // Detección de posición del display (asumimos centro)
+                const anchoDigito = ancho * 0.6;
+                const altoDigito = alto * 0.4;
+                const x = (ancho - anchoDigito) / 2;
+                const y = (alto - altoDigito) / 2;
+
+                let digitosEncontrados = [];
+                const anchoDigitoIndividual = anchoDigito / 4;
+                for (let d = 0; d < 4; d++) {
+                    const digX = x + d * anchoDigitoIndividual;
+                    const digito = decodeSevenSegmentAdvanced(imageData, digX, y, anchoDigitoIndividual, altoDigito);
+                    if (digito === null) {
+                        setMensaje('❌ No se pudieron leer todos los dígitos. Ingresa manualmente.');
+                        setEstado('manual');
+                        return;
+                    }
+                    digitosEncontrados.push(digito);
+                }
+
+                let numero = digitosEncontrados.join('');
+                if (numero.length >= 2) {
+                    numero = numero[0] + '.' + numero.slice(1);
+                } else {
+                    setMensaje('❌ Formato de número no reconocido');
+                    setEstado('manual');
+                    return;
+                }
+
+                // Validación contra referencia
+                let validacionMensaje = '';
+                let valido = true;
+                if (valorReferencia !== null && valorReferencia !== undefined) {
+                    const nuevo = parseFloat(numero);
+                    const ref = parseFloat(valorReferencia);
+                    if (!isNaN(nuevo) && !isNaN(ref) && ref !== 0) {
+                        const diff = Math.abs(nuevo - ref);
+                        const porcentaje = (diff / ref) * 100;
+                        if (porcentaje > toleranciaPorcentual) {
+                            valido = false;
+                            validacionMensaje = `⚠️ Variación del ${porcentaje.toFixed(1)}% (máx ${toleranciaPorcentual}%)`;
+                        } else {
+                            validacionMensaje = `✅ Variación del ${porcentaje.toFixed(1)}% (dentro del ${toleranciaPorcentual}%)`;
+                        }
+                    } else {
+                        validacionMensaje = '✅ Primera calibración, válida';
+                    }
+                } else {
+                    validacionMensaje = '✅ Lectura realizada';
+                }
+
+                setMensaje(validacionMensaje);
+                if (valido) {
+                    setEstado('listo');
+                    onCapture(numero, true, imageDataUrl);
+                    setTimeout(onClose, 1500);
+                } else {
+                    setEstado('manual');
+                }
+            };
+
+            const handleManualSubmit = () => {
+                const val = parseFloat(valorManual);
+                if (isNaN(val)) {
+                    setMensaje('❌ Valor inválido');
+                    return;
+                }
+                let valido = true;
+                let validacionMensaje = '';
+                if (valorReferencia !== null && valorReferencia !== undefined) {
+                    const ref = parseFloat(valorReferencia);
+                    if (!isNaN(ref) && ref !== 0) {
+                        const diff = Math.abs(val - ref);
+                        const porcentaje = (diff / ref) * 100;
+                        if (porcentaje > toleranciaPorcentual) {
+                            valido = false;
+                            validacionMensaje = `⚠️ Variación del ${porcentaje.toFixed(1)}% (máx ${toleranciaPorcentual}%)`;
+                        } else {
+                            validacionMensaje = `✅ Variación del ${porcentaje.toFixed(1)}% (dentro del ${toleranciaPorcentual}%)`;
+                        }
+                    }
+                } else {
+                    validacionMensaje = '✅ Lectura manual aceptada';
+                }
+                setMensaje(validacionMensaje);
+                if (valido) {
+                    onCapture(valorManual, true, capturedImage);
+                    setTimeout(onClose, 1500);
+                }
+            };
+
+            return (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h3 style={{ color: '#004a8f', marginBottom: '20px' }}>📷 Escanear display</h3>
+                        {estado !== 'manual' ? (
+                            <>
+                                <video ref={videoRef} autoPlay playsInline />
+                                {mensajeReferencia && (
+                                    <div style={{ marginTop: '10px', fontSize: '14px', color: '#666', textAlign: 'center' }}>
+                                        {mensajeReferencia}
+                                    </div>
+                                )}
+                                {mensaje && (
+                                    <div className={mensaje.includes('✅') ? 'mensaje-exito' : 'mensaje-error'}>
+                                        {mensaje}
+                                    </div>
+                                )}
+                                <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', marginTop: '20px' }}>
+                                    <button className="btn btn-primary" onClick={capturarYDecodificar} disabled={estado === 'procesando'}>
+                                        {estado === 'procesando' ? 'Procesando...' : '📸 Capturar y validar'}
+                                    </button>
+                                    <button className="btn btn-warning" onClick={() => setEstado('manual')}>✏️ Ingresar manual</button>
+                                    <button className="btn btn-secondary" onClick={onClose}>❌ Cancelar</button>
+                                </div>
+                            </>
+                        ) : (
+                            <div>
+                                <p style={{ marginBottom: '15px' }}>No se pudo leer automáticamente. Ingresa el valor manualmente:</p>
+                                {capturedImage && (
+                                    <img src={capturedImage} alt="Captura" style={{ width: '100%', maxHeight: '200px', objectFit: 'contain', marginBottom: '15px', borderRadius: '8px' }} />
+                                )}
+                                <input
+                                    type="number"
+                                    step="0.001"
+                                    placeholder="Ej: 0.150"
+                                    value={valorManual}
+                                    onChange={(e) => setValorManual(e.target.value)}
+                                    style={{ width: '100%', marginBottom: '15px' }}
+                                />
+                                {mensaje && (
+                                    <div className={mensaje.includes('✅') ? 'mensaje-exito' : 'mensaje-error'}>
+                                        {mensaje}
+                                    </div>
+                                )}
+                                <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+                                    <button className="btn btn-primary" onClick={handleManualSubmit}>✅ Aceptar</button>
+                                    <button className="btn btn-secondary" onClick={onClose}>❌ Cancelar</button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        // ========== COMPONENTE DE CALIBRACIÓN ==========
+        function Calibracion({ usuario, bancos, atornilladores, modelos, torques, historial, setHistorial }) {
+            const [selectedBanco, setSelectedBanco] = useState(null);
+            const [selectedAtornillador, setSelectedAtornillador] = useState(null);
+            const [ultimaCalibracion, setUltimaCalibracion] = useState(null);
+            const [validacionPaso2, setValidacionPaso2] = useState(false);
+            const [valorLeidoPaso2, setValorLeidoPaso2] = useState(null);
+            const [imagenPaso2, setImagenPaso2] = useState(null);
+
+            const [selectedModelo, setSelectedModelo] = useState(null);
+            const [torquesDisponibles, setTorquesDisponibles] = useState([]);
+            const [selectedTorque, setSelectedTorque] = useState(null);
+            const [torqueAplicado, setTorqueAplicado] = useState('');
+            const [resultado, setResultado] = useState(null);
+            const [observaciones, setObservaciones] = useState('');
+            const [mostrarEscanerPaso2, setMostrarEscanerPaso2] = useState(false);
+            const [mostrarEscanerPaso5, setMostrarEscanerPaso5] = useState(false);
+            const [imagenPaso5, setImagenPaso5] = useState(null);
+            const [mensajeGlobal, setMensajeGlobal] = useState('');
+
+            const [imagenPreview, setImagenPreview] = useState(null);
+
+            const atornilladoresDelBanco = selectedBanco 
+                ? atornilladores.filter(a => a.bancoId === selectedBanco.id)
+                : [];
+
+            useEffect(() => {
+                if (selectedAtornillador) {
+                    const calibs = historial
+                        .filter(h => h.serieAtornillador === selectedAtornillador.serie)
+                        .sort((a, b) => new Date(b.fecha.split('/').reverse().join('-')) - new Date(a.fecha.split('/').reverse().join('-')));
+                    setUltimaCalibracion(calibs.length > 0 ? calibs[0] : null);
+                } else setUltimaCalibracion(null);
+            }, [selectedAtornillador, historial]);
+
+            const handleSelectBanco = (e) => {
+                const id = parseInt(e.target.value);
+                setSelectedBanco(bancos.find(b => b.id === id) || null);
+                setSelectedAtornillador(null);
+                setUltimaCalibracion(null);
+                setValidacionPaso2(false);
+                setValorLeidoPaso2(null);
+                setImagenPaso2(null);
+                setSelectedModelo(null);
+                setSelectedTorque(null);
+                setTorqueAplicado('');
+                setResultado(null);
+                setMensajeGlobal('');
+            };
+
+            const handleSelectAtornillador = (e) => {
+                const id = parseInt(e.target.value);
+                const ator = atornilladores.find(a => a.id === id);
+                setSelectedAtornillador(ator);
+                setUltimaCalibracion(null);
+                setValidacionPaso2(false);
+                setValorLeidoPaso2(null);
+                setImagenPaso2(null);
+                setSelectedModelo(null);
+                setSelectedTorque(null);
+                setTorqueAplicado('');
+                setResultado(null);
+            };
+
+            const handleValidacionPaso2 = (valor, valido, imagen) => {
+                setValorLeidoPaso2(valor);
+                setValidacionPaso2(valido);
+                if (imagen) setImagenPaso2(imagen);
+            };
+
+            const handleSelectModelo = (e) => {
+                const id = parseInt(e.target.value);
+                const modelo = modelos.find(m => m.id === id);
+                setSelectedModelo(modelo);
+                setSelectedTorque(null);
+                setTorqueAplicado('');
+                setResultado(null);
+                if (modelo) {
+                    const disponibles = torques.filter(t => t.familia === modelo.familia);
+                    setTorquesDisponibles(disponibles);
+                }
+            };
+
+            const handleSelectTorque = (torqueItem) => {
+                setSelectedTorque(torqueItem);
+                setTorqueAplicado(torqueItem.torque.toFixed(3));
+                setResultado(null);
+            };
+
+            const evaluar = () => {
+                if (!selectedTorque || !torqueAplicado) {
+                    setMensajeGlobal('Selecciona torque y escribe valor');
+                    return;
+                }
+                const aplicado = parseFloat(torqueAplicado);
+                if (isNaN(aplicado)) return;
+                const esperado = selectedTorque.torque;
+                const tolerancia = selectedTorque.tolerancia;
+                const dif = aplicado - esperado;
+                const ok = Math.abs(dif) <= tolerancia;
+                const diffPorc = (dif / esperado) * 100;
+                setResultado({ ok, esperado, aplicado, tolerancia, dif, diffPorc });
+                setMensajeGlobal('');
+            };
+
+            const guardar = () => {
+                if (!selectedBanco || !selectedAtornillador || !selectedModelo || !selectedTorque || !resultado) {
+                    setMensajeGlobal('Completa todos los pasos y evalúa');
+                    return;
+                }
+                if (!validacionPaso2 && ultimaCalibracion) {
+                    setMensajeGlobal('Debes validar la calibración con la cámara en paso 2');
+                    return;
+                }
+                if (!resultado.ok) {
+                    setMensajeGlobal('La calibración actual está fuera de tolerancia. No se puede guardar.');
+                    return;
+                }
+
+                const nuevoRegistro = {
+                    id: Date.now(),
+                    fecha: new Date().toLocaleDateString('es-ES'),
+                    centro: 'Centro Técnico Colombia',
+                    tecnico: usuario.nombre,
+                    banco: selectedBanco.nombre,
+                    modeloEquipo: selectedModelo.nombre,
+                    familiaEquipo: selectedModelo.familia,
+                    serieAtornillador: selectedAtornillador.serie,
+                    modeloAtornillador: selectedAtornillador.modelo,
+                    torqueEsperado: selectedTorque.torque,
+                    torqueAplicado: resultado.aplicado,
+                    tolerancia: selectedTorque.tolerancia,
+                    ok: resultado.ok,
+                    observaciones: observaciones,
+                    uso: selectedTorque.uso,
+                    imagenValidacion: imagenPaso2 || null,
+                    imagenMedicion: imagenPaso5 || null
+                };
+
+                const nuevoHistorial = [nuevoRegistro, ...historial];
+                setHistorial(nuevoHistorial);
+                localStorage.setItem('calibraciones_historial', JSON.stringify(nuevoHistorial));
+                setMensajeGlobal('✅ Calibración guardada');
+                limpiar();
+            };
+
+            const limpiar = () => {
+                setSelectedBanco(null);
+                setSelectedAtornillador(null);
+                setUltimaCalibracion(null);
+                setValidacionPaso2(false);
+                setValorLeidoPaso2(null);
+                setImagenPaso2(null);
+                setSelectedModelo(null);
+                setSelectedTorque(null);
+                setTorqueAplicado('');
+                setResultado(null);
+                setObservaciones('');
+                setImagenPaso5(null);
+                setMensajeGlobal('');
+            };
+
+            return (
+                <div>
+                    {imagenPreview && (
+                        <ImagePreview src={imagenPreview} onClose={() => setImagenPreview(null)} />
+                    )}
+
+                    <h2>🔧 PASO 1: SELECCIONAR BANCO</h2>
+                    <div className="step-card">
+                        <select onChange={handleSelectBanco} value={selectedBanco?.id || ''}>
+                            <option value="">-- Banco --</option>
+                            {bancos.map(b => <option key={b.id} value={b.id}>{b.nombre}</option>)}
+                        </select>
+                    </div>
+
+                    {selectedBanco && (
+                        <>
+                            <h2>🔧 PASO 2: SELECCIONAR ATORNILLADOR Y VALIDAR CON CÁMARA</h2>
+                            <div className="step-card">
+                                <select onChange={handleSelectAtornillador} value={selectedAtornillador?.id || ''}>
+                                    <option value="">-- Atornillador --</option>
+                                    {atornilladoresDelBanco.map(a => (
+                                        <option key={a.id} value={a.id}>{a.serie} - {a.modelo}</option>
+                                    ))}
+                                </select>
+
+                                {selectedAtornillador && (
+                                    <>
+                                        <div className="info-card">
+                                            <div className="info-row"><span className="info-label">Última calibración:</span></div>
+                                            {ultimaCalibracion ? (
+                                                <>
+                                                    <div className="info-row"><span className="info-label">Fecha:</span> {ultimaCalibracion.fecha}</div>
+                                                    <div className="info-row"><span className="info-label">Torque aplicado:</span> {ultimaCalibracion.torqueAplicado} N·m</div>
+                                                    <div className="info-row"><span className="info-label">Resultado:</span> <span className={`badge-${ultimaCalibracion.ok ? 'ok' : 'nok'}`}>{ultimaCalibracion.ok ? 'OK' : 'NOK'}</span></div>
+                                                    {ultimaCalibracion.imagenMedicion && (
+                                                        <div className="info-row">
+                                                            <span className="info-label">Foto medición:</span>
+                                                            <img src={ultimaCalibracion.imagenMedicion} className="thumbnail" onClick={() => setImagenPreview(ultimaCalibracion.imagenMedicion)} />
+                                                        </div>
+                                                    )}
+                                                </>
+                                            ) : (
+                                                <div>No hay calibraciones previas (primera vez)</div>
+                                            )}
+                                        </div>
+
+                                        <div style={{ marginTop: '20px' }}>
+                                            <button 
+                                                className="btn btn-primary" 
+                                                onClick={() => setMostrarEscanerPaso2(true)}
+                                                disabled={validacionPaso2}
+                                            >
+                                                {validacionPaso2 ? '✅ Validado' : '📷 Validar con cámara'}
+                                            </button>
+                                            {valorLeidoPaso2 && (
+                                                <div className={validacionPaso2 ? 'mensaje-exito' : 'mensaje-error'} style={{ marginTop: '10px' }}>
+                                                    Valor leído: {valorLeidoPaso2} N·m
+                                                    {imagenPaso2 && <img src={imagenPaso2} className="thumbnail" style={{ marginLeft: '10px' }} onClick={() => setImagenPreview(imagenPaso2)} />}
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {mostrarEscanerPaso2 && (
+                                            <EscanerSieteSegmentos 
+                                                onClose={() => setMostrarEscanerPaso2(false)}
+                                                onCapture={handleValidacionPaso2}
+                                                valorReferencia={ultimaCalibracion?.torqueAplicado}
+                                                mensajeReferencia={ultimaCalibracion ? `Último valor: ${ultimaCalibracion.torqueAplicado} N·m` : 'Primera calibración'}
+                                                toleranciaPorcentual={3}
+                                            />
+                                        )}
+                                    </>
+                                )}
+                            </div>
+                        </>
+                    )}
+
+                    {selectedAtornillador && (validacionPaso2 || !ultimaCalibracion) && (
+                        <>
+                            <h2>🔧 PASO 3: SELECCIONAR MODELO</h2>
+                            <div className="step-card">
+                                <select onChange={handleSelectModelo} value={selectedModelo?.id || ''}>
+                                    <option value="">-- Modelo --</option>
+                                    {modelos.map(m => <option key={m.id} value={m.id}>{m.nombre} ({m.familia})</option>)}
+                                </select>
+                            </div>
+                        </>
+                    )}
+
+                    {selectedModelo && (
+                        <>
+                            <h2>🔧 PASO 4: SELECCIONAR TORQUE</h2>
+                            <div className="step-card">
+                                <div className="torque-grid">
+                                    {torquesDisponibles.map((item) => (
+                                        <div
+                                            key={item.id}
+                                            className={`torque-btn ${selectedTorque?.id === item.id ? 'selected' : ''}`}
+                                            onClick={() => handleSelectTorque(item)}
+                                        >
+                                            <div>{item.torque.toFixed(3)} N·m</div>
+                                            <div className="small">{item.uso}</div>
+                                            <div className="small">±{item.tolerancia}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+                    {selectedTorque && (
+                        <>
+                            <h2>🔧 PASO 5: INGRESAR TORQUE APLICADO Y EVALUAR</h2>
+                            <div className="step-card">
+                                <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
+                                    <div>
+                                        <label>Torque aplicado (N·m):</label>
+                                        <div style={{ display: 'flex', gap: '8px', marginTop: '5px' }}>
+                                            <input
+                                                type="number"
+                                                step="0.001"
+                                                value={torqueAplicado}
+                                                onChange={(e) => setTorqueAplicado(e.target.value)}
+                                                style={{ width: '200px' }}
+                                            />
+                                            <button 
+                                                type="button" 
+                                                className="btn-small" 
+                                                onClick={() => setMostrarEscanerPaso5(true)}
+                                                style={{ background: '#004a8f', color: 'white', border: 'none', borderRadius: '8px', padding: '0 15px' }}
+                                            >
+                                                📷 Leer display
+                                            </button>
+                                        </div>
+                                        {imagenPaso5 && (
+                                            <img src={imagenPaso5} className="thumbnail" style={{ marginTop: '10px' }} onClick={() => setImagenPreview(imagenPaso5)} />
+                                        )}
+                                    </div>
+                                    <button className="btn btn-primary" onClick={evaluar}>🔍 EVALUAR</button>
+                                </div>
+
+                                {mostrarEscanerPaso5 && (
+                                    <EscanerSieteSegmentos 
+                                        onClose={() => setMostrarEscanerPaso5(false)}
+                                        onCapture={(valor, valido, imagen) => {
+                                            setTorqueAplicado(valor);
+                                            if (imagen) setImagenPaso5(imagen);
+                                            setMostrarEscanerPaso5(false);
+                                            setTimeout(evaluar, 100);
+                                        }}
+                                        valorReferencia={null}
+                                    />
+                                )}
+
+                                {resultado && (
+                                    <div className="result-box">
+                                        <div className={`result-status ${resultado.ok ? 'ok' : 'nok'}`}>
+                                            {resultado.ok ? '✅ DENTRO DE TOLERANCIA' : '❌ FUERA DE TOLERANCIA'}
+                                        </div>
+                                        <div className="result-diff">
+                                            Diferencia: {resultado.dif > 0 ? '+' : ''}{resultado.dif.toFixed(3)} N·m ({resultado.diffPorc.toFixed(2)}%)
+                                        </div>
+                                        <div>Tolerancia especificada: ±{resultado.tolerancia} N·m</div>
+                                    </div>
+                                )}
+
+                                {mensajeGlobal && (
+                                    <div className={mensajeGlobal.includes('✅') ? 'mensaje-exito' : 'mensaje-error'}>
+                                        {mensajeGlobal}
+                                    </div>
+                                )}
+
+                                <div style={{ marginTop: '20px' }}>
+                                    <label>Observaciones:</label>
+                                    <textarea
+                                        rows="2"
+                                        value={observaciones}
+                                        onChange={(e) => setObservaciones(e.target.value)}
+                                        style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '2px solid #c2d9f0' }}
+                                    />
+                                </div>
+
+                                <div className="btn-group">
+                                    <button className="btn btn-primary" onClick={guardar} disabled={!resultado?.ok}>💾 Guardar</button>
+                                    <button className="btn btn-warning" onClick={limpiar}>🧹 Limpiar</button>
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+                    {/* Historial reciente */}
+                    <h2 style={{ marginTop: '40px' }}>📜 Historial reciente</h2>
+                    <div className="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th><th>Técnico</th><th>Banco</th><th>Modelo</th><th>Serie</th><th>Esperado</th><th>Aplicado</th><th>Resultado</th><th>Fotos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {historial.slice(0, 5).map(h => (
+                                    <tr key={h.id}>
+                                        <td>{h.fecha}</td><td>{h.tecnico}</td><td>{h.banco}</td><td>{h.modeloEquipo}</td>
+                                        <td>{h.serieAtornillador}</td><td>{h.torqueEsperado}</td><td>{h.torqueAplicado}</td>
+                                        <td><span className={h.ok ? 'badge-ok' : 'badge-nok'}>{h.ok ? 'OK' : 'NOK'}</span></td>
+                                        <td>
+                                            {h.imagenValidacion && <img src={h.imagenValidacion} className="thumbnail" onClick={() => setImagenPreview(h.imagenValidacion)} />}
+                                            {h.imagenMedicion && <img src={h.imagenMedicion} className="thumbnail" onClick={() => setImagenPreview(h.imagenMedicion)} />}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            );
+        }
+
+        // ========== COMPONENTE DE HISTORIAL COMPLETO CON FILTROS ==========
+        function HistorialCompleto({ historial, setImagenPreview }) {
+            const [filtroMes, setFiltroMes] = useState('');
+            const [filtroAnio, setFiltroAnio] = useState('');
+            const [busqueda, setBusqueda] = useState('');
+
+            const meses = [...new Set(historial.map(h => h.fecha.split('/')[1] + '/' + h.fecha.split('/')[2]))].sort();
+            const años = [...new Set(historial.map(h => h.fecha.split('/')[2]))].sort();
+
+            const filtrar = () => {
+                return historial.filter(h => {
+                    const [dia, mes, anio] = h.fecha.split('/');
+                    const cumpleMes = !filtroMes || `${mes}/${anio}` === filtroMes;
+                    const cumpleAnio = !filtroAnio || anio === filtroAnio;
+                    const cumpleBusqueda = !busqueda || 
+                        h.serieAtornillador.toLowerCase().includes(busqueda.toLowerCase()) ||
+                        h.tecnico.toLowerCase().includes(busqueda.toLowerCase()) ||
+                        h.modeloEquipo.toLowerCase().includes(busqueda.toLowerCase());
+                    return cumpleMes && cumpleAnio && cumpleBusqueda;
+                });
+            };
+
+            const filtrados = filtrar();
+
+            return (
+                <div>
+                    <h2>📜 Historial completo</h2>
+                    <div className="filtros">
+                        <select value={filtroMes} onChange={(e) => setFiltroMes(e.target.value)}>
+                            <option value="">Todos los meses</option>
+                            {meses.map(m => <option key={m} value={m}>{m}</option>)}
+                        </select>
+                        <select value={filtroAnio} onChange={(e) => setFiltroAnio(e.target.value)}>
+                            <option value="">Todos los años</option>
+                            {años.map(a => <option key={a} value={a}>{a}</option>)}
+                        </select>
+                        <input
+                            type="text"
+                            placeholder="Buscar..."
+                            value={busqueda}
+                            onChange={(e) => setBusqueda(e.target.value)}
+                        />
+                    </div>
+                    <div className="stats">
+                        <div className="stat"><span className="stat-number">{filtrados.length}</span><div>Registros</div></div>
+                        <div className="stat"><span className="stat-number">{filtrados.filter(h => h.ok).length}</span><div>OK</div></div>
+                        <div className="stat"><span className="stat-number">{filtrados.filter(h => !h.ok).length}</span><div>NOK</div></div>
+                    </div>
+                    <div className="table-container">
+                        <table>
+                            <thead><tr><th>Fecha</th><th>Técnico</th><th>Banco</th><th>Modelo</th><th>Serie</th><th>Esperado</th><th>Aplicado</th><th>Resultado</th><th>Fotos</th></tr></thead>
+                            <tbody>
+                                {filtrados.map(h => (
+                                    <tr key={h.id}>
+                                        <td>{h.fecha}</td><td>{h.tecnico}</td><td>{h.banco}</td><td>{h.modeloEquipo}</td>
+                                        <td>{h.serieAtornillador}</td><td>{h.torqueEsperado}</td><td>{h.torqueAplicado}</td>
+                                        <td><span className={h.ok ? 'badge-ok' : 'badge-nok'}>{h.ok ? 'OK' : 'NOK'}</span></td>
+                                        <td>
+                                            {h.imagenValidacion && <img src={h.imagenValidacion} className="thumbnail" onClick={() => setImagenPreview(h.imagenValidacion)} />}
+                                            {h.imagenMedicion && <img src={h.imagenMedicion} className="thumbnail" onClick={() => setImagenPreview(h.imagenMedicion)} />}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            );
+        }
+
+        // ========== GESTIÓN DE BANCOS (con contador) ==========
+        function GestionBancos({ bancos, setBancos, atornilladores, setAtornilladores }) {
+            const [nuevoNombre, setNuevoNombre] = useState('');
+            const [editando, setEditando] = useState(null);
+
+            const agregar = () => {
+                if (!nuevoNombre.trim()) return;
+                const nuevoId = bancos.length > 0 ? Math.max(...bancos.map(b => b.id)) + 1 : 1;
+                const nuevo = { id: nuevoId, nombre: nuevoNombre };
+                setBancos([...bancos, nuevo]);
+                setNuevoNombre('');
+            };
+
+            const eliminar = (id) => {
+                if (!confirm('¿Eliminar banco? Se eliminarán también sus atornilladores.')) return;
+                setBancos(bancos.filter(b => b.id !== id));
+                setAtornilladores(atornilladores.filter(a => a.bancoId !== id));
+            };
+
+            const iniciarEdicion = (banco) => {
+                setEditando(banco);
+                setNuevoNombre(banco.nombre);
+            };
+
+            const guardarEdicion = () => {
+                if (!nuevoNombre.trim()) return;
+                setBancos(bancos.map(b => b.id === editando.id ? { ...b, nombre: nuevoNombre } : b));
+                setEditando(null);
+                setNuevoNombre('');
+            };
+
+            return (
+                <div>
+                    <h2>🏢 Gestión de Bancos</h2>
+                    <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                        <input type="text" value={nuevoNombre} onChange={(e) => setNuevoNombre(e.target.value)} placeholder="Nombre del banco" />
+                        {editando ? (
+                            <>
+                                <button className="btn btn-success" onClick={guardarEdicion}>Guardar</button>
+                                <button className="btn btn-warning" onClick={() => { setEditando(null); setNuevoNombre(''); }}>Cancelar</button>
+                            </>
+                        ) : (
+                            <button className="btn btn-primary" onClick={agregar}>➕ Agregar</button>
+                        )}
+                    </div>
+                    <table>
+                        <thead><tr><th>ID</th><th>Nombre</th><th>Acciones</th></tr></thead>
+                        <tbody>
+                            {bancos.map(b => (
+                                <tr key={b.id}>
+                                    <td>{b.id}</td>
+                                    <td>{b.nombre}</td>
+                                    <td>
+                                        <button className="btn-small btn-warning" onClick={() => iniciarEdicion(b)}>✏️</button>
+                                        <button className="btn-small btn-danger" onClick={() => eliminar(b.id)}>🗑️</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        }
+
+        // ========== GESTIÓN DE ATORNILLADORES (con contador) ==========
+        function GestionAtornilladores({ atornilladores, setAtornilladores, bancos }) {
+            const [nuevo, setNuevo] = useState({ serie: '', modelo: '', bancoId: '' });
+            const [editando, setEditando] = useState(null);
+
+            const agregar = () => {
+                if (!nuevo.serie || !nuevo.modelo || !nuevo.bancoId) return;
+                const nuevoId = atornilladores.length > 0 ? Math.max(...atornilladores.map(a => a.id)) + 1 : 1;
+                const nuevoAtornillador = { id: nuevoId, ...nuevo };
+                setAtornilladores([...atornilladores, nuevoAtornillador]);
+                setNuevo({ serie: '', modelo: '', bancoId: '' });
+            };
+
+            const eliminar = (id) => {
+                if (!confirm('¿Eliminar atornillador?')) return;
+                setAtornilladores(atornilladores.filter(a => a.id !== id));
+            };
+
+            const iniciarEdicion = (ator) => {
+                setEditando(ator);
+                setNuevo({ serie: ator.serie, modelo: ator.modelo, bancoId: ator.bancoId });
+            };
+
+            const guardarEdicion = () => {
+                if (!nuevo.serie || !nuevo.modelo || !nuevo.bancoId) return;
+                setAtornilladores(atornilladores.map(a => a.id === editando.id ? { ...a, ...nuevo } : a));
+                setEditando(null);
+                setNuevo({ serie: '', modelo: '', bancoId: '' });
+            };
+
+            return (
+                <div>
+                    <h2>🔧 Gestión de Atornilladores</h2>
+                    <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
+                        <input type="text" placeholder="Serie" value={nuevo.serie} onChange={(e) => setNuevo({...nuevo, serie: e.target.value})} />
+                        <input type="text" placeholder="Modelo" value={nuevo.modelo} onChange={(e) => setNuevo({...nuevo, modelo: e.target.value})} />
+                        <select value={nuevo.bancoId} onChange={(e) => setNuevo({...nuevo, bancoId: parseInt(e.target.value)})}>
+                            <option value="">Banco</option>
+                            {bancos.map(b => <option key={b.id} value={b.id}>{b.nombre}</option>)}
+                        </select>
+                        {editando ? (
+                            <>
+                                <button className="btn btn-success" onClick={guardarEdicion}>Guardar</button>
+                                <button className="btn btn-warning" onClick={() => { setEditando(null); setNuevo({ serie: '', modelo: '', bancoId: '' }); }}>Cancelar</button>
+                            </>
+                        ) : (
+                            <button className="btn btn-primary" onClick={agregar}>➕ Agregar</button>
+                        )}
+                    </div>
+                    <table>
+                        <thead><tr><th>ID</th><th>Serie</th><th>Modelo</th><th>Banco</th><th>Acciones</th></tr></thead>
+                        <tbody>
+                            {atornilladores.map(a => (
+                                <tr key={a.id}>
+                                    <td>{a.id}</td><td>{a.serie}</td><td>{a.modelo}</td><td>{bancos.find(b => b.id === a.bancoId)?.nombre}</td>
+                                    <td>
+                                        <button className="btn-small btn-warning" onClick={() => iniciarEdicion(a)}>✏️</button>
+                                        <button className="btn-small btn-danger" onClick={() => eliminar(a.id)}>🗑️</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        }
+
+        // ========== GESTIÓN DE MODELOS (con contador) ==========
+        function GestionModelos({ modelos, setModelos }) {
+            const [nuevo, setNuevo] = useState({ nombre: '', familia: '' });
+            const [editando, setEditando] = useState(null);
+
+            const agregar = () => {
+                if (!nuevo.nombre || !nuevo.familia) return;
+                const nuevoId = modelos.length > 0 ? Math.max(...modelos.map(m => m.id)) + 1 : 1;
+                setModelos([...modelos, { id: nuevoId, ...nuevo }]);
+                setNuevo({ nombre: '', familia: '' });
+            };
+
+            const eliminar = (id) => {
+                if (!confirm('¿Eliminar modelo?')) return;
+                setModelos(modelos.filter(m => m.id !== id));
+            };
+
+            const iniciarEdicion = (mod) => {
+                setEditando(mod);
+                setNuevo({ nombre: mod.nombre, familia: mod.familia });
+            };
+
+            const guardarEdicion = () => {
+                if (!nuevo.nombre || !nuevo.familia) return;
+                setModelos(modelos.map(m => m.id === editando.id ? { ...m, ...nuevo } : m));
+                setEditando(null);
+                setNuevo({ nombre: '', familia: '' });
+            };
+
+            return (
+                <div>
+                    <h2>📋 Gestión de Modelos</h2>
+                    <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+                        <input type="text" placeholder="Nombre" value={nuevo.nombre} onChange={(e) => setNuevo({...nuevo, nombre: e.target.value})} />
+                        <input type="text" placeholder="Familia" value={nuevo.familia} onChange={(e) => setNuevo({...nuevo, familia: e.target.value})} />
+                        {editando ? (
+                            <>
+                                <button className="btn btn-success" onClick={guardarEdicion}>Guardar</button>
+                                <button className="btn btn-warning" onClick={() => { setEditando(null); setNuevo({ nombre: '', familia: '' }); }}>Cancelar</button>
+                            </>
+                        ) : (
+                            <button className="btn btn-primary" onClick={agregar}>➕ Agregar</button>
+                        )}
+                    </div>
+                    <table>
+                        <thead><tr><th>ID</th><th>Nombre</th><th>Familia</th><th>Acciones</th></tr></thead>
+                        <tbody>
+                            {modelos.map(m => (
+                                <tr key={m.id}>
+                                    <td>{m.id}</td><td>{m.nombre}</td><td>{m.familia}</td>
+                                    <td>
+                                        <button className="btn-small btn-warning" onClick={() => iniciarEdicion(m)}>✏️</button>
+                                        <button className="btn-small btn-danger" onClick={() => eliminar(m.id)}>🗑️</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        }
+
+        // ========== GESTIÓN DE TORQUES (con contador) ==========
+        function GestionTorques({ torques, setTorques }) {
+            const [nuevo, setNuevo] = useState({ familia: '', torque: '', tolerancia: '', uso: '' });
+            const [editando, setEditando] = useState(null);
+
+            const agregar = () => {
+                if (!nuevo.familia || !nuevo.torque || !nuevo.tolerancia || !nuevo.uso) return;
+                const nuevoId = torques.length > 0 ? Math.max(...torques.map(t => t.id)) + 1 : 1;
+                setTorques([...torques, { id: nuevoId, ...nuevo, torque: parseFloat(nuevo.torque), tolerancia: parseFloat(nuevo.tolerancia) }]);
+                setNuevo({ familia: '', torque: '', tolerancia: '', uso: '' });
+            };
+
+            const eliminar = (id) => {
+                if (!confirm('¿Eliminar torque?')) return;
+                setTorques(torques.filter(t => t.id !== id));
+            };
+
+            const iniciarEdicion = (t) => {
+                setEditando(t);
+                setNuevo({ familia: t.familia, torque: t.torque, tolerancia: t.tolerancia, uso: t.uso });
+            };
+
+            const guardarEdicion = () => {
+                if (!nuevo.familia || !nuevo.torque || !nuevo.tolerancia || !nuevo.uso) return;
+                setTorques(torques.map(t => t.id === editando.id ? { ...t, ...nuevo, torque: parseFloat(nuevo.torque), tolerancia: parseFloat(nuevo.tolerancia) } : t));
+                setEditando(null);
+                setNuevo({ familia: '', torque: '', tolerancia: '', uso: '' });
+            };
+
+            return (
+                <div>
+                    <h2>🔩 Gestión de Torques</h2>
+                    <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
+                        <input type="text" placeholder="Familia" value={nuevo.familia} onChange={(e) => setNuevo({...nuevo, familia: e.target.value})} />
+                        <input type="number" step="0.001" placeholder="Torque (N·m)" value={nuevo.torque} onChange={(e) => setNuevo({...nuevo, torque: e.target.value})} />
+                        <input type="number" step="0.001" placeholder="Tolerancia" value={nuevo.tolerancia} onChange={(e) => setNuevo({...nuevo, tolerancia: e.target.value})} />
+                        <input type="text" placeholder="Uso" value={nuevo.uso} onChange={(e) => setNuevo({...nuevo, uso: e.target.value})} />
+                        {editando ? (
+                            <>
+                                <button className="btn btn-success" onClick={guardarEdicion}>Guardar</button>
+                                <button className="btn btn-warning" onClick={() => { setEditando(null); setNuevo({ familia: '', torque: '', tolerancia: '', uso: '' }); }}>Cancelar</button>
+                            </>
+                        ) : (
+                            <button className="btn btn-primary" onClick={agregar}>➕ Agregar</button>
+                        )}
+                    </div>
+                    <table>
+                        <thead><tr><th>Familia</th><th>Torque</th><th>Tolerancia</th><th>Uso</th><th>Acciones</th></tr></thead>
+                        <tbody>
+                            {torques.map(t => (
+                                <tr key={t.id}>
+                                    <td>{t.familia}</td><td>{t.torque}</td><td>±{t.tolerancia}</td><td>{t.uso}</td>
+                                    <td>
+                                        <button className="btn-small btn-warning" onClick={() => iniciarEdicion(t)}>✏️</button>
+                                        <button className="btn-small btn-danger" onClick={() => eliminar(t.id)}>🗑️</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        }
+
+        // ========== GESTIÓN DE USUARIOS (con contador) ==========
+        function GestionUsuarios({ usuario, usuarios, setUsuarios }) {
+            const [nuevo, setNuevo] = useState({ username: '', password: '', nombre: '', rol: 'tecnico' });
+            const [editando, setEditando] = useState(null);
+
+            if (usuario.rol !== 'admin') return <div className="info-card">Acceso restringido a administradores.</div>;
+
+            const agregar = () => {
+                if (!nuevo.username || !nuevo.password || !nuevo.nombre) return;
+                const nuevoId = usuarios.length > 0 ? Math.max(...usuarios.map(u => u.id)) + 1 : 1;
+                setUsuarios([...usuarios, { id: nuevoId, ...nuevo }]);
+                setNuevo({ username: '', password: '', nombre: '', rol: 'tecnico' });
+            };
+
+            const eliminar = (id) => {
+                if (id === usuario.id) { alert('No puedes eliminarte a ti mismo'); return; }
+                if (!confirm('¿Eliminar usuario?')) return;
+                setUsuarios(usuarios.filter(u => u.id !== id));
+            };
+
+            const iniciarEdicion = (u) => {
+                setEditando(u);
+                setNuevo({ username: u.username, password: u.password, nombre: u.nombre, rol: u.rol });
+            };
+
+            const guardarEdicion = () => {
+                if (!nuevo.username || !nuevo.password || !nuevo.nombre) return;
+                setUsuarios(usuarios.map(u => u.id === editando.id ? { ...u, ...nuevo } : u));
+                setEditando(null);
+                setNuevo({ username: '', password: '', nombre: '', rol: 'tecnico' });
+            };
+
+            return (
+                <div>
+                    <h2>👥 Gestión de Usuarios</h2>
+                    <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
+                        <input type="text" placeholder="Usuario" value={nuevo.username} onChange={(e) => setNuevo({...nuevo, username: e.target.value})} />
+                        <input type="password" placeholder="Contraseña" value={nuevo.password} onChange={(e) => setNuevo({...nuevo, password: e.target.value})} />
+                        <input type="text" placeholder="Nombre completo" value={nuevo.nombre} onChange={(e) => setNuevo({...nuevo, nombre: e.target.value})} />
+                        <select value={nuevo.rol} onChange={(e) => setNuevo({...nuevo, rol: e.target.value})}>
+                            <option value="tecnico">Técnico</option>
+                            <option value="supervisor">Supervisor</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                        {editando ? (
+                            <>
+                                <button className="btn btn-success" onClick={guardarEdicion}>Guardar</button>
+                                <button className="btn btn-warning" onClick={() => { setEditando(null); setNuevo({ username: '', password: '', nombre: '', rol: 'tecnico' }); }}>Cancelar</button>
+                            </>
+                        ) : (
+                            <button className="btn btn-primary" onClick={agregar}>➕ Agregar</button>
+                        )}
+                    </div>
+                    <table>
+                        <thead><tr><th>ID</th><th>Usuario</th><th>Nombre</th><th>Rol</th><th>Acciones</th></tr></thead>
+                        <tbody>
+                            {usuarios.map(u => (
+                                <tr key={u.id}>
+                                    <td>{u.id}</td><td>{u.username}</td><td>{u.nombre}</td><td>{u.rol}</td>
+                                    <td>
+                                        <button className="btn-small btn-warning" onClick={() => iniciarEdicion(u)}>✏️</button>
+                                        <button className="btn-small btn-danger" onClick={() => eliminar(u.id)}>🗑️</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        }
+
+        // ========== LOGIN ==========
+        function Login({ onLogin, usuarios }) {
+            const [user, setUser] = useState('');
+            const [pass, setPass] = useState('');
+            const [error, setError] = useState('');
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                const encontrado = usuarios.find(u => u.username === user && u.password === pass);
+                if (encontrado) onLogin(encontrado);
+                else setError('Credenciales incorrectas');
+            };
+            return (
+                <div style={{ maxWidth: '400px', margin: '100px auto', background: 'white', borderRadius: '30px', padding: '40px' }}>
+                    <h2 style={{ color: '#004a8f', textAlign: 'center' }}>🔧 CALIBRAP INGENICO</h2>
+                    <form onSubmit={handleSubmit}>
+                        <input type="text" placeholder="Usuario" value={user} onChange={e => setUser(e.target.value)} required />
+                        <input type="password" placeholder="Contraseña" value={pass} onChange={e => setPass(e.target.value)} required />
+                        <button type="submit" style={{ width: '100%', padding: '14px', background: '#004a8f', color: 'white', border: 'none', borderRadius: '12px', marginTop: '20px' }}>Ingresar</button>
+                        {error && <div style={{ color: '#dc3545', marginTop: '15px' }}>{error}</div>}
+                    </form>
+                </div>
+            );
+        }
+
+        // ========== COMPONENTE PRINCIPAL ==========
+        function App() {
+            const [usuario, setUsuario] = useState(null);
+            const [vista, setVista] = useState('calibracion');
+
+            const [usuarios, setUsuarios] = useState(() => loadFromStorage('usuarios', inicialUsuarios));
+            const [bancos, setBancos] = useState(() => loadFromStorage('bancos', inicialBancos));
+            const [atornilladores, setAtornilladores] = useState(() => loadFromStorage('atornilladores', inicialAtornilladores));
+            const [modelos, setModelos] = useState(() => loadFromStorage('modelos', inicialModelos));
+            const [torques, setTorques] = useState(() => loadFromStorage('torques', inicialTorques));
+            const [historial, setHistorial] = useState(() => loadFromStorage('calibraciones_historial', []));
+            const [imagenPreview, setImagenPreview] = useState(null);
+
+            useEffect(() => localStorage.setItem('usuarios', JSON.stringify(usuarios)), [usuarios]);
+            useEffect(() => localStorage.setItem('bancos', JSON.stringify(bancos)), [bancos]);
+            useEffect(() => localStorage.setItem('atornilladores', JSON.stringify(atornilladores)), [atornilladores]);
+            useEffect(() => localStorage.setItem('modelos', JSON.stringify(modelos)), [modelos]);
+            useEffect(() => localStorage.setItem('torques', JSON.stringify(torques)), [torques]);
+
+            if (!usuario) {
+                return <Login onLogin={setUsuario} usuarios={usuarios} />;
+            }
+
+            return (
+                <div className="app">
+                    {imagenPreview && <ImagePreview src={imagenPreview} onClose={() => setImagenPreview(null)} />}
+                    <div className="header">
+                        <h1>🔧 CALIBRAP INGENICO <span>Version 2.0</span></h1>
+                        <div className="user-info">
+                            <span className="user-badge">{usuario.nombre} ({usuario.rol})</span>
+                            <button className="logout-btn" onClick={() => setUsuario(null)}>Salir</button>
+                        </div>
+                    </div>
+                    <div className="nav">
+                        <button className={vista === 'calibracion' ? 'active' : ''} onClick={() => setVista('calibracion')}>🔧 Calibración</button>
+                        <button className={vista === 'historial' ? 'active' : ''} onClick={() => setVista('historial')}>📜 Historial</button>
+                        <button className={vista === 'bancos' ? 'active' : ''} onClick={() => setVista('bancos')}>🏢 Bancos</button>
+                        <button className={vista === 'atornilladores' ? 'active' : ''} onClick={() => setVista('atornilladores')}>🔧 Atornilladores</button>
+                        <button className={vista === 'modelos' ? 'active' : ''} onClick={() => setVista('modelos')}>📋 Modelos</button>
+                        <button className={vista === 'torques' ? 'active' : ''} onClick={() => setVista('torques')}>🔩 Torques</button>
+                        <button className={vista === 'usuarios' ? 'active' : ''} onClick={() => setVista('usuarios')}>👥 Usuarios</button>
+                    </div>
+                    <div className="content">
+                        {vista === 'calibracion' && (
+                            <Calibracion
+                                usuario={usuario}
+                                bancos={bancos}
+                                atornilladores={atornilladores}
+                                modelos={modelos}
+                                torques={torques}
+                                historial={historial}
+                                setHistorial={setHistorial}
+                            />
+                        )}
+                        {vista === 'historial' && (
+                            <HistorialCompleto historial={historial} setImagenPreview={setImagenPreview} />
+                        )}
+                        {vista === 'bancos' && (
+                            <GestionBancos
+                                bancos={bancos}
+                                setBancos={setBancos}
+                                atornilladores={atornilladores}
+                                setAtornilladores={setAtornilladores}
+                            />
+                        )}
+                        {vista === 'atornilladores' && (
+                            <GestionAtornilladores
+                                atornilladores={atornilladores}
+                                setAtornilladores={setAtornilladores}
+                                bancos={bancos}
+                            />
+                        )}
+                        {vista === 'modelos' && (
+                            <GestionModelos
+                                modelos={modelos}
+                                setModelos={setModelos}
+                            />
+                        )}
+                        {vista === 'torques' && (
+                            <GestionTorques
+                                torques={torques}
+                                setTorques={setTorques}
+                            />
+                        )}
+                        {vista === 'usuarios' && (
+                            <GestionUsuarios
+                                usuario={usuario}
+                                usuarios={usuarios}
+                                setUsuarios={setUsuarios}
+                            />
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>

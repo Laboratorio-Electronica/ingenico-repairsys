@@ -1,0 +1,49 @@
+/* ==================================================
+  🧩 ICON BASE COMPONENT
+  --------------------------------------------------
+  Componente base para iconografía reutilizable.
+  Diseñado para:
+  - Integrarse en botones, links, labels
+  - Heredar color del contexto
+  - Escalar mediante modificadores de tamaño
+================================================== */
+
+.icon {
+
+  /* ==================================================
+    BASE STRUCTURE
+    --------------------------------------------------
+    - Centrado perfecto del SVG / icon font
+    - Evita distorsión de layout
+  ================================================== */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  line-height: 1;
+  vertical-align: middle;
+
+  color: inherit;      /* Hereda color del padre */
+  flex-shrink: 0;      /* Evita compresión en flex layouts */
+
+  transition: var(--transition-fast);
+
+
+  /* ==================================================
+    SIZE MODIFIERS
+    --------------------------------------------------
+    Controlados mediante design tokens.
+  ================================================== */
+
+  &--sm {
+    font-size: var(--font-size-body-sm);
+  }
+
+  &--md {
+    font-size: var(--font-size-body-md);
+  }
+
+  &--lg {
+    font-size: var(--font-size-heading-md);
+  }
+}

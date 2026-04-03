@@ -1,0 +1,140 @@
+/**
+* =========================================================
+* Textarea Component Styles
+* ---------------------------------------------------------
+* Estilos base para el componente textarea del sistema
+* de diseño. Define la apariencia, comportamiento y
+* variantes de tamaño del campo de entrada multilínea.
+*
+* Arquitectura:
+* - Sigue convención BEM
+* - Block: .textarea
+* - Modifiers: .textarea--sm | .textarea--md | .textarea--lg
+*
+* Responsabilidades:
+* - Definir estilo visual consistente para textareas
+* - Integrarse con los design tokens del sistema
+* - Permitir variantes de tamaño reutilizables
+* - Mantener comportamiento accesible en focus
+*
+* Dependencias:
+* - spacing tokens
+* - typography tokens
+* - color tokens
+* - radius tokens
+* - transition tokens
+*
+* Utilizado en:
+* - formularios
+* - campos de comentarios
+* - inputs multilínea en interfaces de usuario
+* =========================================================
+*/
+
+
+/* =========================================================
+  TEXTAREA (BLOCK)
+  ---------------------------------------------------------
+  Estilo base del componente textarea.
+  ========================================================= */
+
+.textarea {
+
+  /**
+  * Hace que el textarea ocupe todo el ancho disponible
+  * dentro de su contenedor.
+  */
+  width: 100%;
+
+  /**
+  * Permite redimensionar solo verticalmente
+  * para evitar romper layouts horizontales.
+  */
+  resize: vertical;
+
+  /**
+  * Altura mínima inicial del textarea.
+  */
+  min-height: 8rem;
+
+  /**
+  * Espaciado interno del campo.
+  * Basado en tokens de spacing del design system.
+  */
+  padding: var(--space-xs) var(--space-sm);
+
+  /**
+  * Hereda la tipografía del contenedor padre
+  * para mantener consistencia en formularios.
+  */
+  font-family: inherit;
+
+  /**
+  * Colores basados en el sistema de temas
+  * (light / dark).
+  */
+  background-color: var(--color-bg-container);
+  color: var(--color-text);
+
+  /**
+  * Borde base del textarea.
+  */
+  border: 1.5px solid var(--color-border);
+
+  /**
+  * Radio de borde definido por tokens de radius.
+  */
+  border-radius: var(--radius-md);
+
+  /**
+  * Transición suave para estados interactivos
+  * como focus o hover.
+  */
+  transition: var(--transition-fast);
+
+
+  /* =======================================================
+    FOCUS STATE
+    -------------------------------------------------------
+    Estilo aplicado cuando el textarea recibe foco.
+    Mejora accesibilidad y feedback visual.
+    ======================================================= */
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-border-focus);
+  }
+
+
+  /* =======================================================
+    SIZE MODIFIERS
+    -------------------------------------------------------
+    Variantes de tamaño del textarea para diferentes
+    contextos de UI.
+    ======================================================= */
+
+  /* ===== Sizes ===== */
+
+  /**
+  * Variante pequeña.
+  * Usada en formularios compactos.
+  */
+  &--sm {
+    font-size: var(--font-size-body-xs);
+  }
+
+  /**
+  * Variante mediana (tamaño estándar).
+  */
+  &--md {
+    font-size: var(--font-size-body-sm);
+  }
+
+  /**
+  * Variante grande.
+  * Utilizada en áreas de entrada más prominentes.
+  */
+  &--lg {
+    font-size: var(--font-size-body-md);
+  }
+}

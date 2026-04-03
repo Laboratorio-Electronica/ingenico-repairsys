@@ -1,0 +1,17 @@
+[
+  {
+    "path": "/profile",
+    "isProtect": true,
+    "notice": []
+  },
+  {
+    "path": "/project",
+    "isProtect": false,
+    "notice": []
+  },
+  {
+    "path": "/dashboard",
+    "isProtect": true,
+    "notice": []
+  }
+]

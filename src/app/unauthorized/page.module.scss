@@ -1,0 +1,66 @@
+/**
+ * =========================================================
+ * UNAUTHORIZED (BLOCK)
+ * ---------------------------------------------------------
+ * Componente visual utilizado para mostrar un estado de
+ * acceso no autorizado dentro de la aplicación.
+ *
+ * Este bloque suele utilizarse cuando:
+ * - El usuario no tiene permisos para acceder a un recurso
+ * - Se intenta acceder a una ruta protegida
+ * - Se requiere autenticación o autorización adicional
+ *
+ * Layout:
+ * - Contenido centrado vertical y horizontalmente
+ * - Diseño simple orientado a mensajes de estado
+ * =========================================================
+ */
+
+.unauthorized {
+
+  /**
+   * Contenedor principal
+   */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  padding: var(--space-xl);
+  gap: var(--space-sm);
+
+  max-width: 48rem;
+  margin: 0 auto;
+
+  /**
+   * -------------------------------------------------------
+   * TITLE
+   * -------------------------------------------------------
+   * Título principal del mensaje de acceso no autorizado.
+   */
+  &__title {
+    font-size: var(--font-size-heading-md);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  /**
+   * -------------------------------------------------------
+   * TEXT
+   * -------------------------------------------------------
+   * Texto descriptivo que explica la situación al usuario.
+   */
+  &__text {
+    font-size: var(--font-size-body-sm);
+    color: var(--color-text);
+
+    /**
+     * Variante de texto secundario
+     * Usado para mensajes informativos o aclaraciones.
+     */
+    &--muted {
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+  }
+}

@@ -1,0 +1,68 @@
+/* ==================================================
+  🔽 SELECT (Atom)
+  --------------------------------------------------
+  Select custom estilizado basado en design tokens.
+  Características:
+  - Reset visual (appearance: none)
+  - Flecha custom con background-image
+  - Soporte de tamaños (sm, md, lg)
+  - Integración con sistema de colores y spacing
+================================================== */
+
+.select {
+
+  /* Reset nativo */
+  appearance: none;
+  cursor: pointer;
+
+  /* Espaciado interno (extra a la derecha para flecha) */
+  padding:
+    var(--space-xs)
+    var(--space-lg)
+    var(--space-xs)
+    var(--space-sm);
+
+  font-family: inherit;
+
+  /* Visual */
+  background-color: var(--color-bg-container);
+  color: var(--color-text);
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+
+  transition: var(--transition-fast);
+
+  /* Flecha personalizada */
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--color-text) 50%),
+    linear-gradient(135deg, var(--color-text) 50%, transparent 50%);
+
+  background-position:
+    calc(100% - var(--space-md)) 50%,
+    calc(100% - var(--space-sm)) 50%;
+
+  background-size: 0.6rem 0.6rem;
+  background-repeat: no-repeat;
+
+  /* Estado focus accesible */
+  &:focus-visible {
+    outline: none;
+    border-color: var(--color-focus);
+  }
+
+  /* ===============================
+    SIZE MODIFIERS
+  =============================== */
+  &--sm {
+    font-size: var(--font-size-body-sm);
+  }
+
+  &--md {
+    font-size: var(--font-size-body-md);
+  }
+
+  &--lg {
+    font-size: var(--font-size-body-lg);
+  }
+}

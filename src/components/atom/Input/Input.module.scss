@@ -1,0 +1,180 @@
+.input {
+
+  /* ===== BASE (mobile) ===== */
+  width: 100%;
+
+  padding: 0.5rem 0.75rem;
+
+  font-size: 0.85rem;
+  font-family: inherit;
+
+  background: var(--surface);
+  color: var(--text);
+
+  border: 2px solid var(--border);
+  border-radius: 12px;
+
+  transition: 0.2s;
+
+  /* ===== Focus ===== */
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 74, 143, 0.15);
+  }
+
+  /* ===== Disabled ===== */
+  &:disabled {
+    background: var(--surface-alt);
+    color: rgba(0, 0, 0, 0.4);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  /* ===== States ===== */
+
+  &--error {
+    border-color: var(--error);
+    background: rgba(220, 53, 69, 0.05);
+  }
+
+  /* ===== Sizes (mobile defaults) ===== */
+
+  &--sm {
+    font-size: 0.8rem;
+  }
+
+  &--md {
+    font-size: 0.85rem;
+  }
+
+  &--lg {
+    font-size: 0.95rem;
+  }
+
+}
+
+
+/* ===== TABLET ===== */
+@media (min-width: 640px) {
+
+  .input {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.9rem;
+
+    &--lg {
+      font-size: 1rem;
+      padding: 0.75rem 1.1rem;
+    }
+  }
+
+}
+
+
+/* ===== DESKTOP ===== */
+@media (min-width: 1024px) {
+
+  .input {
+    font-size: 0.95rem;
+
+    &--lg {
+      font-size: 1.05rem;
+    }
+  }
+
+}
+
+// /**
+//  * =========================================================
+//  * INPUT (ATOM)
+//  * ---------------------------------------------------------
+//  * Estilos base para el componente Input utilizado en
+//  * formularios de la aplicación.
+//  *
+//  * Características:
+//  * - Adaptable a diferentes tamaños
+//  * - Estados de foco accesibles
+//  * - Soporte para estado deshabilitado
+//  * - Integración con variables del sistema de diseño
+//  * =========================================================
+//  */
+
+// .input {
+
+//   /**
+//    * Estilos base del campo de entrada
+//    */
+//   width: 100%;
+//   padding: var(--space-xs) var(--space-sm);
+//   font-family: inherit;
+
+//   background-color: var(--color-background-container);
+//   color: var(--color-text);
+
+//   border: 1.5px solid var(--color-border);
+//   border-radius: var(--border-radius-md);
+
+//   transition:
+//     border-color 0.25s ease,
+//     box-shadow 0.25s ease;
+
+//   /**
+//    * -------------------------------------------------------
+//    * FOCUS STATE
+//    * -------------------------------------------------------
+//    * Estilos aplicados cuando el input recibe foco.
+//    * Mejora accesibilidad y visibilidad del elemento activo.
+//    */
+//   &:focus {
+//     outline: none;
+//     border-color: var(--color-border-focus);
+//     box-shadow: 0 0 0 2px var(--color-border-shadow);
+//   }
+
+//   /**
+//    * -------------------------------------------------------
+//    * DISABLED STATE
+//    * -------------------------------------------------------
+//    * Estilos aplicados cuando el input está deshabilitado.
+//    */
+//   &:disabled {
+//     background-color: var(--color-bg-disable);
+//     color: var(--color-secondary-text);
+//     cursor: not-allowed;
+//     opacity: 0.8;
+//   }
+// }
+
+
+// /**
+//  * =========================================================
+//  * INPUT SIZES
+//  * ---------------------------------------------------------
+//  * Variantes de tamaño disponibles para el componente Input.
+//  *
+//  * sm → pequeño
+//  * md → mediano (default)
+//  * lg → grande
+//  * =========================================================
+//  */
+
+// /**
+//  * Small input
+//  */
+// .sm {
+//   font-size: var(--font-size-xs);
+// }
+
+// /**
+//  * Medium input
+//  */
+// .md {
+//   font-size: var(--font-size-sm);
+// }
+
+// /**
+//  * Large input
+//  */
+// .lg {
+//   font-size: var(--font-size-base);
+// }
