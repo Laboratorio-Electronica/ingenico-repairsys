@@ -1,0 +1,107 @@
+/* =====================================================
+  FOOTER
+  -----------------------------------------------------
+  Estructura del pie de página.
+  Basado en metodología BEM:
+  .footer
+  .footer__top
+  .footer__column
+  .footer__bottom
+  etc.
+  ===================================================== */
+
+.footer {
+  width: 100%;
+  padding: var(--space-2xl);
+  color: var(--color-text);
+  font-size: var(--font-size-body-sm);
+
+  /* ===================================================
+    TOP SECTION
+    ---------------------------------------------------
+    Contiene columnas principales del footer:
+    - Enlaces
+    - Información
+    - Secciones adicionales
+    =================================================== */
+  &__top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+  }
+
+  /* Columna individual */
+  &__column {
+    flex: 1;
+    min-width: 22rem; // valor estructural mínimo
+    text-align: center;
+  }
+
+  /* Título de sección */
+  &__title {
+    margin-bottom: var(--space-xs);
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* Lista sin estilos por defecto */
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-xs) 0;
+  }
+
+  /* Item individual de lista */
+  &__item {
+    margin: var(--space-xxs) 0;
+  }
+
+  /* Enlace del footer */
+  &__link {
+    color: var(--color-text-soft);
+    text-decoration: none;
+    transition: var(--transition-fast);
+
+    /* Hover visual */
+    &:hover {
+      color: var(--color-primary-500);
+    }
+
+    /* Accesibilidad */
+    &:focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+    }
+  }
+
+  /* ===================================================
+    BOTTOM SECTION
+    ---------------------------------------------------
+    Área inferior con:
+    - Redes sociales
+    - Copyright
+    =================================================== */
+  &__bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-lg);
+  }
+
+  /* Contenedor de iconos sociales */
+  &__social {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  /* Texto legal */
+  &__copyright {
+    margin: 0;
+    font-size: var(--font-size-caption);
+    color: var(--color-text-soft);
+  }
+}

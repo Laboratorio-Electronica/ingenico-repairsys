@@ -1,0 +1,111 @@
+/* ==================================================
+  🚨 ERROR COMPONENT - BASE STYLES
+  --------------------------------------------------
+  Layout estructural para páginas de error o estado.
+  Implementado con metodología BEM.
+
+  Responsabilidades:
+  - Definir estructura principal
+  - Controlar distribución imagen / contenido
+  - Permitir modificadores opcionales
+================================================== */
+
+.error {
+
+  /* ==================================================
+    CONTENEDOR PRINCIPAL
+    --------------------------------------------------
+    - Centrado horizontal
+    - Layout flexible
+    - Permite wrap en pantallas pequeñas
+  ================================================== */
+  &__container {
+    width: 90%;
+    min-width: 30rem;
+    max-width: 102.4rem;
+
+    margin-inline: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+
+    /* ----------------------------------------------
+      🎨 Modificador: fondo opcional
+    ---------------------------------------------- */
+    &-background {
+      background-color: var(--color-bg-container);
+    }
+
+    /* ----------------------------------------------
+      📏 Modificador: altura completa de viewport
+    ---------------------------------------------- */
+    &-height {
+      height: 100vh;
+    }
+  }
+
+
+  /* ==================================================
+    IMAGEN / ILUSTRACIÓN
+    --------------------------------------------------
+    - Ocupa 50% del contenedor en desktop
+    - Mantiene límites mínimos y máximos
+  ================================================== */
+  &__image {
+    padding: var(--space-xs) var(--space-xl);
+
+    width: 50%;
+    min-width: 32rem;
+    max-width: 48rem;
+
+    margin-inline: auto;
+    text-align: center;
+  }
+
+
+  /* ==================================================
+    CONTENIDO DINÁMICO (children)
+    --------------------------------------------------
+    - Ocupa 50% en desktop
+    - Ajusta tamaño tipográfico
+  ================================================== */
+  &__children {
+    width: 50%;
+
+    font-size: var(--font-size-2xl);
+
+    min-width: 30rem;
+    max-width: max-content;
+
+    margin: 0 auto;
+    padding: 0 var(--space-xl);
+  }
+}
+
+
+/* ==================================================
+  📱 RESPONSIVE (Mobile ≤ 768px)
+  --------------------------------------------------
+  - Cambia layout a columna invertida
+  - Ajusta tamaño de imagen
+  - Reduce tamaño tipográfico
+================================================== */
+
+@media (max-width: 768px) {
+
+  .error__container {
+    flex-direction: column-reverse;
+  }
+
+  .error__image {
+    width: 30rem;
+    height: 40rem;
+  }
+
+  .error__children {
+    font-size: var(--font-size-xl);
+  }
+}

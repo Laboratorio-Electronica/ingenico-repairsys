@@ -1,0 +1,77 @@
+/* =====================================================
+   STATUS STATE COMPONENT
+   -----------------------------------------------------
+   Componente visual reutilizable para representar:
+   - Loading
+   - Empty
+   - Error
+   - Muted states
+   Basado en metodología BEM.
+   ===================================================== */
+
+
+/* ============================= */
+/* STATE (BLOCK) */
+/* ============================= */
+
+.state {
+  min-height: 18rem;   /* Altura mínima estructural */
+  max-width: 32rem;    /* Control de ancho para legibilidad */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--space-xl);
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+
+/* ============================= */
+/* VARIANTS (MODIFIERS) */
+/* ============================= */
+
+.state--muted {
+  color: var(--color-text-soft);
+}
+
+.state--error {
+  color: var(--color-error-500);
+}
+
+
+/* ============================= */
+/* ELEMENTS */
+/* ============================= */
+
+.state__icon {
+  font-size: var(--font-size-heading-sm);
+  margin-bottom: var(--space-sm);
+  opacity: 0.85;
+}
+
+/* Icon color per variant */
+
+.state--muted .state__icon {
+  color: var(--color-text-soft);
+}
+
+.state--error .state__icon {
+  color: var(--color-error-500);
+}
+
+.state__title {
+  font-size: var(--font-size-body-md);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-xs);
+}
+
+.state__message {
+  font-size: var(--font-size-body-sm);
+  line-height: var(--line-height-normal);
+  max-width: 26rem;
+  opacity: 0.9;
+}

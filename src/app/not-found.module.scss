@@ -1,0 +1,203 @@
+.not-found {
+
+  /* ===== CONTAINER ===== */
+  &__container {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 2rem 1rem;
+
+    text-align: center;
+    background: var(--bg);
+  }
+
+  /* ===== CODE (404) ===== */
+  &__code {
+    font-size: 3rem;
+    font-weight: 800;
+
+    color: var(--primary);
+    line-height: 1;
+  }
+
+  /* ===== TITLE ===== */
+  &__title {
+    margin-top: 1rem;
+
+    font-size: 1.3rem;
+    font-weight: 600;
+
+    color: var(--text);
+  }
+
+  /* ===== MESSAGE ===== */
+  &__message {
+    margin-top: 0.5rem;
+
+    font-size: 0.9rem;
+    color: var(--text);
+    opacity: 0.7;
+
+    max-width: 320px;
+  }
+
+  /* ===== ACTIONS ===== */
+  &__actions {
+    margin-top: 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    width: 100%;
+    max-width: 250px;
+  }
+
+  /* ===== ILLUSTRATION ===== */
+  &__image {
+    margin-top: 2rem;
+
+    width: 100%;
+    max-width: 260px;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+}
+
+@media (min-width: 640px) {
+
+  .not-found {
+
+    &__code {
+      font-size: 4rem;
+    }
+
+    &__title {
+      font-size: 1.6rem;
+    }
+
+    &__actions {
+      flex-direction: row;
+      justify-content: center;
+      max-width: none;
+    }
+
+    &__image {
+      max-width: 320px;
+    }
+
+  }
+
+}
+
+@media (min-width: 1024px) {
+
+  .not-found {
+
+    &__code {
+      font-size: 5rem;
+    }
+
+    &__title {
+      font-size: 2rem;
+    }
+
+  }
+
+}
+
+// /* ==================================================
+//   🚫 NOT FOUND PAGE STYLES
+//   --------------------------------------------------
+//   Estilos específicos para la página 404.
+//   Implementado con metodología BEM.
+//   Usa únicamente design tokens del sistema.
+// ================================================== */
+
+// .not-found {
+
+//   /* Contenedor principal */
+//   padding: var(--space-3xl) 0;
+//   text-align: center;
+
+
+//   /* ==================================================
+//     TÍTULO PRINCIPAL ( <404/> )
+//   ================================================== */
+//   &__title {
+//     font-size: var(--font-size-display);
+//     font-weight: var(--font-weight-bold);
+//     color: var(--color-text-error);
+//     line-height: var(--line-height-tight);
+//   }
+
+
+//   /* ==================================================
+//     BLOQUE DE LÍNEAS SIMULANDO CÓDIGO
+//   ================================================== */
+//   &__paragraph {
+//     display: inline-flex;
+//     font-weight: var(--font-weight-semibold);
+//     font-size: var(--font-size-display);
+//   }
+
+//   &__sign {
+//     display: block;
+//     color: var(--color-text-soft);
+//     font-size: var(--font-size-display);
+//   }
+
+//   &__tag {
+//     display: flex;
+//     justify-content: center;
+//     font-family: var(--font-family-text);
+//     font-size: var(--font-size-display);
+
+//     /* ⚠ Hardcoded color */
+//     color: #2c4880;
+//   }
+
+//   &__ref {
+//     /* ⚠ Hardcoded color */
+//     color: #2cc3e8;
+//   }
+
+
+//   /* ==================================================
+//     TEXTO DESCRIPTIVO
+//   ================================================== */
+//   &__text {
+//     margin-left: var(--space-2xl);
+//     color: var(--color-text);
+//     font-size: var(--font-size-display);
+//   }
+
+
+//   /* ==================================================
+//     LINK DE RETORNO
+//   ================================================== */
+//   &__link {
+//     display: inline-block;
+//     padding: 0 var(--space-md);
+//     color: var(--color-button-primary-text);
+//   }
+// }
+
+
+// /* ==================================================
+//   📱 RESPONSIVE ADJUSTMENTS
+// ================================================== */
+
+// @media (max-width: 768px) {
+//   .not-found__title {
+//     margin: var(--space-md) auto;
+//   }
+// }

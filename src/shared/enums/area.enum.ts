@@ -1,0 +1,4 @@
+export enum Area {
+  WAREHOUSE = "WAREHOUSE",
+  LABORATORY = "LABORATORY"
+}

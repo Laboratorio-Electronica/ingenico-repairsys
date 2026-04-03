@@ -1,0 +1,192 @@
+@use '@/styles/tokens/colors';
+@use '@/styles/tokens/radius';
+@use '@/styles/tokens/shadows';
+
+@use '@/styles/themes/light';
+@use '@/styles/themes/dark';
+
+@use '@/styles/base/reset';
+@use '@/styles/base/globals';
+
+@use '@/styles/components/button';
+@use '@/styles/components/card';
+@use '@/styles/components/input';
+
+// @use '@/styles/_variables.scss';
+// @use '@/styles/_light.scss';
+// @use '@/styles/_dark.scss';
+// // @use '@/styles/abstracts/_colors.scss';      /* 🎨 Paleta de colores */
+
+// * {
+//   margin: 0;
+//   padding: 0;
+//   box-sizing: border-box;
+//   font-family: variables.$font-family;
+// }
+
+// body {
+//   background: var(--bg);
+//   color: var(--text);
+//   padding: 20px;
+// }
+
+// /* ===== Layout ===== */
+
+// .app {
+//   max-width: 1400px;
+//   margin: 0 auto;
+//   background: var(--surface);
+//   border-radius: variables.$border-radius-lg;
+//   box-shadow: variables.$shadow-main;
+//   border: 1px solid var(--border);
+//   overflow: hidden;
+// }
+
+// /* ===== Header ===== */
+
+// .header {
+//   background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+//   color: white;
+//   padding: 20px 30px;
+//   display: flex;
+//   justify-content: space-between;
+//   border-bottom: 3px solid var(--secondary);
+// }
+
+// /* ===== Nav ===== */
+
+// .nav {
+//   background: var(--surface-alt);
+//   border-bottom: 2px solid var(--border);
+//   padding: 15px 30px;
+//   display: flex;
+//   gap: 10px;
+// }
+
+// .nav button {
+//   padding: 12px 25px;
+//   border-radius: 40px;
+//   background: transparent;
+//   color: var(--primary);
+//   font-weight: 700;
+//   cursor: pointer;
+//   transition: 0.2s;
+// }
+
+// .nav button:hover {
+//   background: rgba(0, 74, 143, 0.1);
+// }
+
+// .nav button.active {
+//   background: var(--primary);
+//   color: white;
+// }
+
+// /* ===== Cards ===== */
+
+// .card {
+//   background: var(--surface-alt);
+//   border: 1px solid var(--border);
+//   border-radius: variables.$border-radius-md;
+//   box-shadow: variables.$shadow-soft;
+// }
+
+// /* ===== Inputs ===== */
+
+// input,
+// select,
+// textarea {
+//   padding: 12px 18px;
+//   border: 2px solid var(--border);
+//   border-radius: variables.$border-radius-sm;
+//   background: var(--surface);
+//   color: var(--text);
+//   transition: 0.2s;
+// }
+
+// input:focus,
+// select:focus,
+// textarea:focus {
+//   border-color: var(--primary);
+//   box-shadow: 0 0 0 3px rgba(0, 74, 143, 0.15);
+//   outline: none;
+// }
+
+// /* ===== Buttons ===== */
+
+// .btn {
+//   padding: 14px 28px;
+//   border-radius: 14px;
+//   font-weight: 700;
+//   cursor: pointer;
+//   border: none;
+// }
+
+// .btn-primary {
+//   background: var(--primary);
+//   color: white;
+// }
+
+// .btn-success {
+//   background: var(--success);
+//   color: white;
+// }
+
+// .btn-danger {
+//   background: var(--error);
+//   color: white;
+// }
+
+// .btn-warning {
+//   background: var(--secondary);
+//   color: #002b54;
+// }
+
+// /* ===== States ===== */
+
+// .badge-ok {
+//   background: rgba(40, 167, 69, 0.15);
+//   color: var(--success);
+// }
+
+// .badge-nok {
+//   background: rgba(220, 53, 69, 0.15);
+//   color: var(--error);
+// }
+
+// // /* ================================
+// //    🌐 GLOBAL STYLES - global.css
+// // ================================ */
+
+// // /* =====================================
+// //    📦 TAILWIND CSS (Enable if used)
+// // ===================================== */
+// // /*
+// // @tailwind base;
+// // @tailwind components;
+// // @tailwind utilities;
+// // */
+
+// // /* =====================================
+// //    🎨 DESIGN TOKENS - Global Variables
+// // ===================================== */
+// // @use '@/styles/abstracts/_colors.scss';      /* 🎨 Paleta de colores */
+// // @use '@/styles/abstracts/_typography.scss';  /* ✍️ Tipografías, tamaños, pesos */
+// // @use '@/styles/abstracts/_spacing.scss';     /* 📏 Margenes, paddings */
+// // @use '@/styles/abstracts/_layout.scss';      /* 📐 Reglas de layout (grid, flex) */
+// // @use '@/styles/themes/_themes.scss';      /* 🌗 Temas claros/oscuros */
+// // @use '@/styles/themes/_light.scss';      /* 🌗 Temas claros/oscuros */
+// // @use '@/styles/themes/_dark.scss';      /* 🌗 Temas claros/oscuros */
+// // @use '@/styles/abstracts/_mixins.scss';     /* 🧩 Mixins reutilizables */
+// // @use '@/styles/base/_fonts.scss';      /* 🔤 Definición de fuentes tipográficas */
+// // @use '@/styles/abstracts/_radius.scss';      /* 📐 Radius Tokens */
+
+// // /* =====================================
+// //    🔄 CSS RESET
+// // ===================================== */
+// // @use '@/styles/vendors/_normalize.scss'; /* Reestablece estilos base entre navegadores */
+
+// // /* =====================================
+// //    🧱 BASE STYLES
+// // ===================================== */
+// // @use '@/styles/base/_base.scss';  /* Estilos base globales del proyecto */

@@ -1,0 +1,10 @@
+@use '../tokens/radius' as *;
+@use '../tokens/shadows' as *;
+
+.card {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: $radius-md;
+  box-shadow: $shadow-soft;
+  padding: 20px;
+}

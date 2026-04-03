@@ -1,0 +1,262 @@
+.button {
+
+  /* ===== BASE (mobile) ===== */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+
+  width: auto;
+  min-height: 2.6rem;
+
+  padding: 0 1rem;
+
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+
+  border-radius: 12px;
+  border: 1px solid transparent;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+  /* ===== FOCUS ===== */
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 74, 143, 0.2);
+  }
+
+  /* ===== ACTIVE ===== */
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+
+  /* ===== DISABLED ===== */
+  &:disabled {
+    background: var(--surface-alt);
+    color: rgba(0, 0, 0, 0.4);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  /* ===============================
+    VARIANTS
+  =============================== */
+
+  &--primary {
+    background: var(--primary);
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+  }
+
+  &--secondary {
+    background: var(--surface);
+    color: var(--text);
+    border-color: var(--border);
+
+    &:hover:not(:disabled) {
+      background: var(--surface-alt);
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: var(--primary);
+
+    &:hover:not(:disabled) {
+      background: rgba(0, 74, 143, 0.1);
+    }
+  }
+
+  &--success {
+    background: var(--success);
+    color: white;
+  }
+
+  &--danger {
+    background: var(--error);
+    color: white;
+  }
+
+  /* ===============================
+    SIZES (mobile first)
+  =============================== */
+
+  &--sm {
+    min-height: 2.2rem;
+    font-size: 0.75rem;
+    padding: 0 0.7rem;
+  }
+
+  &--md {
+    min-height: 2.6rem;
+  }
+
+  &--lg {
+    min-height: 3rem;
+    font-size: 0.95rem;
+    padding: 0 1.3rem;
+  }
+
+  &--full {
+    width: 100%;
+  }
+
+}
+
+@media (min-width: 640px) {
+
+  .button {
+    font-size: 0.9rem;
+    min-height: 2.8rem;
+
+    &--lg {
+      min-height: 3.4rem;
+      font-size: 1rem;
+    }
+  }
+
+}
+
+@media (min-width: 1024px) {
+
+  .button {
+    font-size: 0.95rem;
+
+    &--lg {
+      min-height: 3.6rem;
+    }
+  }
+
+}
+
+// /* ==================================================
+//   🔘 BUTTON (Core Component)
+//   --------------------------------------------------
+//   Componente base de acción del sistema.
+//   Implementado con:
+//   - BEM
+//   - Variantes semánticas
+//   - Tamaños escalables
+//   - Estados interactivos completos
+//   - Integración con design tokens
+// ================================================== */
+
+// .button {
+//   position: relative;
+
+//   /* Layout */
+//   height: 3.6rem;
+//   display: inline-flex;
+//   align-items: center;
+//   justify-content: center;
+//   gap: 0.6rem;
+
+//   padding: 0 var(--space-sm);
+
+//   /* Typography */
+//   font-family: inherit;
+//   font-weight: var(--font-weight-semibold);
+//   font-size: var(--font-size-caption);
+
+//   /* Visual */
+//   border-radius: var(--radius-md);
+//   border: 1px solid transparent;
+
+//   cursor: pointer;
+
+//   transition:
+//     background 0.25s ease,
+//     transform 0.15s ease,
+//     box-shadow 0.25s ease,
+//     border-color 0.25s ease;
+
+//   backdrop-filter: blur(6px);
+
+//   /* Focus */
+//   &:focus-visible {
+//     outline: none;
+//     box-shadow: 0 0 0 3px var(--color-button-focus);
+//   }
+
+//   /* Active */
+//   &:active:not(:disabled) {
+//     transform: translateY(1px);
+//   }
+
+//   /* Disabled */
+//   &:disabled {
+//     background: var(--color-bg-disable);
+//     color: var(--color-text-soft);
+//     cursor: not-allowed;
+//     opacity: 0.6;
+//   }
+
+//   /* ===============================
+//     VARIANTS
+//   =============================== */
+
+//   &--primary {
+//     background: linear-gradient(
+//       135deg,
+//       var(--color-button-primary-bg),
+//       var(--color-button-primary-hover)
+//     );
+//     color: var(--color-text);
+//     box-shadow: 0 6px 18px var(--color-shadow);
+
+//     &:hover:not(:disabled) {
+//       transform: translateY(-2px);
+//       box-shadow: 0 10px 24px var(--color-shadow);
+//     }
+//   }
+
+//   &--secondary {
+//     background: var(--color-button-secondary-bg);
+//     color: var(--color-text);
+//     border-color: var(--color-border);
+
+//     &:hover:not(:disabled) {
+//       background: var(--color-button-disable);
+//     }
+//   }
+
+//   &--ghost {
+//     background: transparent;
+//     color: var(--color-text);
+
+//     &:hover:not(:disabled) {
+//       background: var(--color-button-disable);
+//     }
+//   }
+
+//   /* ===============================
+//     SIZES
+//   =============================== */
+
+//   &--sm {
+//     height: 3rem;
+//     font-size: var(--font-size-xs);
+//     padding: 0 var(--space-md);
+//   }
+
+//   &--md {
+//     height: 3.6rem;
+//   }
+
+//   &--lg {
+//     height: 4.4rem;
+//     font-size: var(--font-size-lg);
+//     padding: 0 var(--space-xl);
+//   }
+
+//   &--full {
+//     width: 100%;
+//   }
+// }

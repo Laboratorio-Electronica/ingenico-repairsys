@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": {
+      "es": "automatización",
+      "en": "automation"
+    },
+    "color": "blue",
+    "icon": "https://cdn-icons-png.flaticon.com/512/8807/8807368.png"
+  },
+  {
+    "id": 2,
+    "name": {
+      "es": "desarrollo",
+      "en": "development"
+    },
+    "color": "green",
+    "icon": "https://cdn-icons-png.flaticon.com/512/1055/1055687.png"
+  },
+  {
+    "id": 3,
+    "name": {
+      "es": "innovación",
+      "en": "innovation"
+    },
+    "color": "red",
+    "icon": "https://cdn-icons-png.flaticon.com/512/190/190411.png"
+  },
+  {
+    "id": 4,
+    "name": {
+      "es": "tecnología",
+      "en": "technology"
+    },
+    "color": "teal",
+    "icon": "https://cdn-icons-png.flaticon.com/512/2721/2721297.png"
+  },
+  {
+    "id": 5,
+    "name": {
+      "es": "raspberry pi",
+      "en": "raspberry pi"
+    },
+    "color": "pink",
+    "icon": "https://cdn-icons-png.flaticon.com/512/919/919836.png"
+  },
+  {
+    "id": 6,
+    "name": {
+      "es": "IoT",
+      "en": "IoT"
+    },
+    "color": "gray",
+    "icon": "https://cdn-icons-png.flaticon.com/512/1041/1041916.png"
+  }
+]

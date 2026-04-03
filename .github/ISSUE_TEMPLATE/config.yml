@@ -1,0 +1,10 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: ❓ Soporte y preguntas generales
+    url: https://github.com/Laboratorio-Electronica/repair-sys/discussions
+    about: Usa Discussions para dudas, ideas generales o conversación abierta.
+
+  - name: 🛡 Reportar problema de seguridad
+    url: mailto:carlos.medina@ingenico.com
+    about: Reporta vulnerabilidades de seguridad de forma privada y responsable.

@@ -1,0 +1,189 @@
+.error {
+
+  /* ===== CONTAINER (mobile base) ===== */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 100vh;
+  padding: 2rem 1rem;
+
+  text-align: center;
+
+  /* ===============================
+    TITLE
+  =============================== */
+  &__title {
+    font-size: 1.4rem;
+    font-weight: 700;
+
+    color: var(--error);
+    line-height: 1.2;
+  }
+
+  /* ===============================
+    MESSAGE
+  =============================== */
+  &__message {
+    margin-top: 0.8rem;
+
+    font-size: 0.9rem;
+    color: var(--text);
+    opacity: 0.8;
+  }
+
+  /* ===============================
+    ACTIONS
+  =============================== */
+  &__actions {
+    display: flex;
+    flex-direction: column; /* mobile */
+    gap: 0.8rem;
+
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 280px;
+  }
+
+}
+
+@media (min-width: 640px) {
+
+  .error {
+
+    &__title {
+      font-size: 1.8rem;
+    }
+
+    &__message {
+      font-size: 1rem;
+    }
+
+    &__actions {
+      flex-direction: row;
+      justify-content: center;
+      max-width: none;
+    }
+
+  }
+
+}
+
+@media (min-width: 1024px) {
+
+  .error {
+
+    &__title {
+      font-size: 2.2rem;
+    }
+
+  }
+
+}
+
+// /* ==================================================
+//   🚨 ERROR PAGE STYLES
+//   --------------------------------------------------
+//   Estilos específicos para página de error.
+//   Implementación basada en:
+//   - Design tokens (color, spacing, radius, motion)
+//   - Metodología BEM
+//   - Mobile-first
+// ================================================== */
+
+// .error {
+
+//   /* Contenedor principal */
+//   padding: var(--space-3xl) 0;
+//   text-align: center;
+
+
+//   /* ==================================================
+//     🏷 TITLE
+//   ================================================== */
+//   &__title {
+//     font-size: var(--font-size-heading-lg);
+//     font-weight: var(--font-weight-bold);
+//     color: var(--color-text-error);
+//     line-height: var(--line-height-tight);
+//   }
+
+
+//   /* ==================================================
+//     💬 MESSAGE
+//   ================================================== */
+//   &__message {
+//     margin-top: var(--space-md);
+//     font-size: var(--font-size-body-lg);
+//     color: var(--color-text-soft);
+//   }
+
+
+//   /* ==================================================
+//     🎛 ACTIONS CONTAINER
+//   ================================================== */
+//   &__button-container {
+//     display: flex;
+//     justify-content: center;
+//     gap: var(--space-md);
+//     margin-top: var(--space-xl);
+//   }
+
+
+//   /* ==================================================
+//     🔘 BUTTON BASE
+//     --------------------------------------------------
+//     Estilo base compartido para acciones.
+//   ================================================== */
+//   &__button {
+//     padding: var(--space-sm) var(--space-lg);
+//     border-radius: var(--radius-full);
+
+//     font-size: var(--font-size-body-md);
+//     font-weight: var(--font-weight-semibold);
+
+//     border: none;
+//     cursor: pointer;
+
+//     transition: var(--transition-default);
+
+
+//     /* ----------------------------------------------
+//       🔁 Retry Action
+//     ---------------------------------------------- */
+//     &--retry {
+//       background-color: var(--color-button-primary-bg);
+//       color: var(--color-button-primary-text);
+
+//       &:hover {
+//         background-color: var(--color-button-primary-hover);
+//       }
+//     }
+
+
+//     /* ----------------------------------------------
+//       🏠 Home Action
+//     ---------------------------------------------- */
+//     &--home {
+//       background-color: var(--color-button-secondary-bg);
+//       color: var(--color-button-secondary-text);
+
+//       &:hover {
+//         background-color: var(--color-button-secondary-hover);
+//       }
+//     }
+//   }
+
+
+//   /* ==================================================
+//     📱 Tablet and up (≥ 768px)
+//     --------------------------------------------------
+//     Ajuste tipográfico para pantallas mayores.
+//   ================================================== */
+//   @media (min-width: 768px) {
+//     &__title {
+//       font-size: var(--font-size-display);
+//     }
+//   }
+// }

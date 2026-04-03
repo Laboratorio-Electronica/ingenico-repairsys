@@ -1,0 +1,17 @@
+@use '../tokens/colors' as *;
+
+:root {
+  --bg: #{$bg-light};
+  --surface: #{$surface-light};
+  --surface-alt: #{$surface-alt-light};
+
+  --text: #{$text-light};
+  --border: #{$border-light};
+
+  --primary: #{$primary-500};
+  --primary-dark: #{$primary-700};
+  --secondary: #{$secondary-500};
+
+  --success: #{$success-500};
+  --error: #{$error-500};
+}

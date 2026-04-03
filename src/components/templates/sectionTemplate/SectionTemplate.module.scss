@@ -1,0 +1,45 @@
+/* =====================================================
+  INTRO SECTION
+  -----------------------------------------------------
+  Bloque de introducción reutilizable.
+  Diseñado para mostrar:
+  - Título principal
+  - Texto descriptivo
+  Basado en metodología BEM.
+  ===================================================== */
+
+/* ============ INTRO SECTION (BLOCK) ============ */
+.intro-section {
+  margin-bottom: var(--space-3xl);
+  padding-inline: var(--space-md);
+
+  /* ===================================================
+    TITLE
+    ---------------------------------------------------
+    Encabezado principal de la sección.
+    Usa tipografía de headings del design system.
+    =================================================== */
+  &__title {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-heading-md);
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+  }
+
+  /* ===================================================
+    PARAGRAPH
+    ---------------------------------------------------
+    Texto descriptivo.
+    - max-width: 72ch optimiza legibilidad.
+    - line-height relajado para lectura cómoda.
+    =================================================== */
+  &__paragraph {
+    max-width: 72ch; // clave para lectura óptima
+    font-size: var(--font-size-body-md);
+    color: var(--color-secondary-text);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--space-xl);
+    text-align: left;
+  }
+}

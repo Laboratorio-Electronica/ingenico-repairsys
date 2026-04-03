@@ -1,0 +1,53 @@
+/* Container for the entire language switcher dropdown */
+.language__container {
+  width: max-content; /* Fits content width */
+  display: block;
+  color: var(--color-text); /* Inherits the text color from the theme */
+  font-size: var(--font-size-xl); /* Extra large font size */
+  position: absolute;
+  right: 0; /* Aligns to the right side of its parent */
+  top: var(--space-2xl); /* Pushes it down from the top */
+  background-color: var(--color-background-container); /* Background based on theme */
+  border-radius: var(--border-radius-lg) 0 0 var(--border-radius-lg); /* Rounded corners on left side */
+  text-align: end; /* Aligns text to the right */
+}
+
+/* Button that toggles the language dropdown */
+.language__button {
+  display: flex; /* Layout items horizontally */
+  align-items: center; /* Vertically center icon and text */
+  background-color: transparent; /* No background */
+  margin: var(--space-sm) auto; /* Vertical spacing and horizontal centering */
+  font-size: var(--font-size-xl); /* Extra large text */
+}
+
+/* Styling for the icon that indicates dropdown state */
+.language__button--deploy {
+  font-weight: var(--font-weight-bold); /* Bolder icon weight */
+}
+
+/* Container that holds the language options */
+.language__items-container {
+  display: block;
+  margin: var(--space-md); /* Medium spacing */
+}
+
+/* Individual language option styling */
+.language__item {
+  margin: 0 var(--space-sm); /* Horizontal spacing between items */
+  cursor: pointer; /* Cursor changes to pointer on hover */
+}
+
+/* Responsive styles for mobile devices */
+@media (max-width: 425px) {
+  /* Hide the dropdown toggle button on small screens */
+  .language__button {
+    display: none;
+  }
+
+  /* Adjust language options container for mobile view */
+  .language__items-container {
+    font-size: var(--font-size-base); /* Use base font size for better fit */
+    text-align: end; /* Align text to the right */
+  }
+}

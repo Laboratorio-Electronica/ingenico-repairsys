@@ -1,0 +1,79 @@
+name: 📝 Issue general
+description: Reporta un bug, propone una mejora o plantea una tarea técnica de Repair Sys
+title: "[ISSUE] - descripción corta"
+labels: ["triage"]
+assignees:
+  - KrlozMedina
+
+body:
+  - type: dropdown
+    id: tipo
+    attributes:
+      label: Tipo de issue
+      options:
+        - Bug
+        - Feature
+        - Mejora
+        - Documentación
+        - Tarea técnica
+    validations:
+      required: true
+
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: Descripción
+      description: Describe claramente el problema, idea o tarea.
+      value: |
+        ## Contexto
+
+        ## Objetivo
+
+        ## Detalle técnico
+
+        ## Checklist
+        - [ ] Requerimiento claro
+        - [ ] Impacto identificado
+        - [ ] Integración con API definida (si aplica)
+        - [ ] Validaciones consideradas
+        - [ ] Pruebas realizadas
+    validations:
+      required: true
+
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Contexto adicional
+      description: Información técnica, logs, referencias o capturas.
+      placeholder: Logs, endpoints, screenshots, decisiones técnicas…
+
+  - type: dropdown
+    id: prioridad
+    attributes:
+      label: Prioridad
+      options:
+        - Baja
+        - Media
+        - Alta
+        - Crítica
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: impacto
+    attributes:
+      label: Impacto
+      options:
+        - label: Afecta calibración
+        - label: Afecta inventario
+        - label: Afecta auditoría
+        - label: Afecta usuarios
+        - label: Afecta rendimiento
+        - label: Afecta seguridad
+
+  - type: input
+    id: milestone
+    attributes:
+      label: Milestone
+      description: Fase del sistema
+      placeholder: v1.0 - Módulo de calibración

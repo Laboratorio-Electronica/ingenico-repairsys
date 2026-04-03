@@ -1,0 +1,32 @@
+.btn {
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s;
+}
+
+.btn--primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn--primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn--success {
+  background: var(--success);
+  color: white;
+}
+
+.btn--danger {
+  background: var(--error);
+  color: white;
+}
+
+.btn--warning {
+  background: var(--secondary);
+  color: #002b54;
+}

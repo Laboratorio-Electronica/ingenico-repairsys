@@ -1,0 +1,103 @@
+/* =====================================================
+  APP LAYOUT (HEADER FULL WIDTH)
+  -----------------------------------------------------
+  Estructura:
+  - Header (full width arriba)
+  - Main (sidebar + content)
+  ===================================================== */
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--color-bg-container);
+
+  /* ===================================================
+    MAIN CONTAINER
+    ---------------------------------------------------
+    Contenedor horizontal:
+    - Sidebar (izquierda)
+    - Page (derecha)
+    =================================================== */
+  &__main {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+
+  /* ===================================================
+    PAGE CONTENT
+    ---------------------------------------------------
+    Área principal:
+    - Scroll independiente
+    - Padding consistente
+    =================================================== */
+  &__page {
+    flex: 1;
+    padding: var(--space-lg);
+    overflow-y: auto;
+  }
+}
+
+// /* =====================================================
+//   GENERIC LAYOUT
+//   -----------------------------------------------------
+//   Layout base estructural.
+//   Organiza:
+//   - Contenedor principal horizontal.
+//   - Área principal flexible.
+//   - Contenido de página con scroll interno.
+//   Basado en metodología BEM.
+//   ===================================================== */
+
+// .layout {
+//   display: flex;
+//   height: 100vh;
+//   background-color: var(--color-bg-container);
+
+//   /* ===================================================
+//     MAIN CONTAINER
+//     ---------------------------------------------------
+//     Área principal que ocupa el espacio restante.
+//     - Dirección vertical.
+//     - Oculta overflow externo.
+//     =================================================== */
+//   &__main {
+//     flex: 1;
+//     display: flex;
+//     flex-direction: column;
+//     overflow: hidden;
+//   }
+
+//   /* ===================================================
+//     PAGE CONTENT
+//     ---------------------------------------------------
+//     Contenedor interno con scroll vertical.
+//     - Padding consistente del sistema de diseño.
+//     - Scroll independiente del layout.
+//     =================================================== */
+//   &__page {
+//     flex: 1;
+//     padding: var(--space-md);
+//     overflow-y: auto;
+//   }
+// }
+
+// .layout {
+//   display: flex;
+//   height: 100vh;
+//   background: #f5f7fb;
+
+//   &__main {
+//     flex: 1;
+//     display: flex;
+//     flex-direction: column;
+//     overflow: hidden;
+//   }
+
+//   &__page {
+//     flex: 1;
+//     padding: 1.5rem;
+//     overflow-y: auto;
+//   }
+// }

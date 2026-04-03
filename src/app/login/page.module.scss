@@ -1,0 +1,370 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f5f7fb;
+}
+
+.card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 320px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+
+.button {
+  background: #2563eb;
+  color: white;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background: #1d4ed8;
+  }
+
+  &:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+  }
+}
+
+.error {
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+// .login {
+
+//   /* ===== CONTAINER (mobile base) ===== */
+//   &__container {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+
+//     padding: 1rem;
+//     min-height: 100vh;
+//   }
+
+//   /* ===== FORM ===== */
+//   &__form {
+//     width: 100%;
+
+//     padding: 1.5rem;
+
+//     background: var(--surface);
+//     border-radius: 16px;
+//     border: 1px solid var(--border);
+
+//     box-shadow: 0 10px 25px rgba(0, 40, 80, 0.15);
+//   }
+
+//   /* ===== TITLE ===== */
+//   &__title {
+//     font-size: 1.2rem;
+//     font-weight: 700;
+
+//     margin-bottom: 1.5rem;
+
+//     text-align: center;
+//     text-transform: uppercase;
+
+//     color: var(--primary);
+//   }
+
+//   /* ===== ERROR ===== */
+//   &__error {
+//     color: var(--error);
+//     font-size: 0.8rem;
+
+//     margin: 0.8rem 0;
+//     text-align: center;
+//   }
+
+//   /* ===== FIELD ===== */
+//   &__field {
+//     margin-bottom: 1.2rem;
+//   }
+
+//   /* ===== LABEL ===== */
+//   &__label {
+//     display: flex;
+//     flex-direction: column; /* mobile */
+
+//     gap: 0.2rem;
+//     margin-bottom: 0.4rem;
+
+//     font-size: 0.85rem;
+//   }
+
+//   /* ===== INPUT ===== */
+//   &__input {
+//     width: 100%;
+//   }
+
+//   &__input-error {
+//     border-color: var(--error);
+//     background: rgba(220, 53, 69, 0.05);
+//   }
+
+//   /* ===== ERROR TEXT ===== */
+//   &__error-text {
+//     color: var(--error);
+//     font-size: 0.7rem;
+//     margin-top: 0.2rem;
+
+//     text-align: left; /* mobile */
+//   }
+
+// }
+
+// @media (min-width: 640px) {
+
+//   .login {
+
+//     &__container {
+//       padding: 2rem;
+//     }
+
+//     &__form {
+//       max-width: 32rem;
+//       padding: 2rem;
+//     }
+
+//     &__title {
+//       font-size: 1.4rem;
+//     }
+
+//     &__label {
+//       flex-direction: row;
+//       justify-content: space-between;
+//       align-items: center;
+//     }
+
+//     &__error-text {
+//       text-align: right;
+//     }
+
+//   }
+
+// }
+
+// @media (min-width: 1024px) {
+
+//   .login {
+
+//     &__form {
+//       max-width: 40rem;
+//     }
+
+//     &__title {
+//       font-size: 1.6rem;
+//     }
+
+//   }
+
+// }
+
+// // /**
+// //  * =========================================================
+// //  * LOGIN (BLOCK)
+// //  * ---------------------------------------------------------
+// //  * Estilos para la página de autenticación del sistema.
+// //  *
+// //  * Este bloque define la estructura visual del formulario
+// //  * de login incluyendo:
+// //  * - Contenedor principal
+// //  * - Formulario
+// //  * - Título
+// //  * - Campos de entrada
+// //  * - Mensajes de error
+// //  *
+// //  * El diseño está pensado para:
+// //  * - Centrar el formulario en la pantalla
+// //  * - Mantener una interfaz clara y accesible
+// //  * - Adaptarse a dispositivos móviles
+// //  * =========================================================
+// //  */
+
+// // .login {
+
+// //   /**
+// //    * -------------------------------------------------------
+// //    * CONTAINER
+// //    * -------------------------------------------------------
+// //    * Contenedor principal que centra el formulario
+// //    * vertical y horizontalmente.
+// //    */
+// //   &__container {
+// //     display: flex;
+// //     align-items: center;
+// //     justify-content: center;
+
+// //     padding: var(--space-lg);
+
+// //     min-height: 80vh;
+// //   }
+
+// //   /**
+// //    * -------------------------------------------------------
+// //    * FORM
+// //    * -------------------------------------------------------
+// //    * Caja que contiene el formulario de autenticación.
+// //    */
+// //   &__form {
+// //     width: 100%;
+// //     max-width: 40rem;
+// //     min-width: 28rem;
+
+// //     padding: var(--space-lg);
+
+// //     background-color: var(--color-bg-container);
+
+// //     border-radius: var(--radius-lg);
+// //     box-shadow: var(--shadow-md);
+// //   }
+
+// //   /**
+// //    * -------------------------------------------------------
+// //    * TITLE
+// //    * -------------------------------------------------------
+// //    * Título del formulario de login.
+// //    */
+// //   &__title {
+// //     font-size: var(--font-size-heading-sm);
+// //     font-weight: var(--font-weight-bold);
+
+// //     margin-bottom: var(--space-lg);
+
+// //     text-align: center;
+// //     text-transform: uppercase;
+// //   }
+
+// //   /**
+// //    * -------------------------------------------------------
+// //    * ERROR MESSAGE
+// //    * -------------------------------------------------------
+// //    * Mensaje de error general del formulario
+// //    * (ej: credenciales incorrectas).
+// //    */
+// //   &__error-message {
+// //     color: var(--color-text-error);
+
+// //     font-size: var(--font-size-body-sm);
+
+// //     margin: var(--space-lg) 0;
+// //     text-align: center;
+// //   }
+
+// //   /**
+// //    * -------------------------------------------------------
+// //    * LABEL
+// //    * -------------------------------------------------------
+// //    * Contenedor del label y posibles acciones auxiliares
+// //    * (ej: enlace "forgot password").
+// //    */
+// //   &__label {
+// //     display: flex;
+// //     justify-content: space-between;
+// //     align-items: center;
+
+// //     gap: var(--space-xs);
+// //     margin-bottom: var(--space-md);
+
+// //     font-size: var(--font-size-body-md);
+// //   }
+
+// //   /**
+// //    * -------------------------------------------------------
+// //    * INPUT
+// //    * -------------------------------------------------------
+// //    * Variantes visuales para campos del formulario.
+// //    */
+// //   &__input {
+
+// //     /**
+// //      * Estado visual cuando el input contiene un error
+// //      */
+// //     &--error {
+// //       border-color: var(--color-border-error);
+// //       background-color: var(--color-bg-error);
+// //     }
+
+// //     /**
+// //      * Mensaje de error asociado al campo
+// //      */
+// //     &--message-error {
+// //       color: var(--color-text-error);
+
+// //       font-size: var(--font-size-body-xs);
+
+// //       margin-top: var(--space-xs);
+// //       text-align: center;
+// //     }
+
+// //   }
+
+// // }
+
+
+// // /**
+// //  * =========================================================
+// //  * MOBILE STYLES
+// //  * ---------------------------------------------------------
+// //  * Ajustes para pantallas pequeñas.
+// //  *
+// //  * Cambios:
+// //  * - Reduce tamaño del título
+// //  * - Labels se apilan verticalmente
+// //  * - Ajuste en alineación de mensajes de error
+// //  * =========================================================
+// //  */
+
+// // @media (max-width: 480px) {
+
+// //   .login {
+
+// //     &__title {
+// //       font-size: var(--font-size-body-md);
+// //     }
+
+// //     &__label {
+// //       flex-direction: column;
+// //       align-items: flex-start;
+// //     }
+
+// //     &__input {
+
+// //       &--message-error {
+// //         text-align: end;
+// //       }
+
+// //     }
+
+// //   }
+
+// // }
