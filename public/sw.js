@@ -1,6 +1,52 @@
+const CACHE_NAME = 'repairsys-v1';
+
+const STATIC_ASSETS = [
+  '/',
+  '/manifest.json',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png',
+];
+
+/* ================================
+  INSTALL
+================================ */
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(STATIC_ASSETS);
+    })
+  );
+
+  self.skipWaiting();
+});
+
+/* ================================
+  ACTIVATE
+================================ */
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      )
+    )
+  );
+
+  self.clients.claim();
+});
+
+/* ================================
+  FETCH
+================================ */
+
 self.addEventListener('fetch', (event) => {
   const { request } = event;
 
+  // ✅ FILTRO CRÍTICO (evita error chrome-extension)
   // ❗ SOLO requests válidos
   if (
     request.method !== 'GET' ||
@@ -22,7 +68,27 @@ self.addEventListener('fetch', (event) => {
   }
 
   // ================================
-  // SOLO assets (cache)
+  // API → network first
+  // ================================
+  if (request.url.includes('/api/')) {
+    event.respondWith(
+      fetch(request)
+        .then((res) => {
+          const clone = res.clone();
+
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, clone);
+          });
+
+          return res;
+        })
+        .catch(() => caches.match(request))
+    );
+    return;
+  }
+
+  // ================================
+  // ASSETS → cache first
   // ================================
   if (
     url.pathname.startsWith('/_next') ||

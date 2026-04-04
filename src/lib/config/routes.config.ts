@@ -4,7 +4,7 @@ import { ImBlog, ImProfile } from 'react-icons/im';
 import { BiMessageDots } from 'react-icons/bi';
 import { SiPolymerproject, SiBookstack } from 'react-icons/si';
 import { MdSpaceDashboard } from 'react-icons/md';
-import { FaUsers } from 'react-icons/fa';
+import { FaHistory, FaUsers } from 'react-icons/fa';
 import { IoMdImages } from 'react-icons/io';
 import { HiOutlineDocumentText } from 'react-icons/hi';
 
@@ -133,6 +133,12 @@ const ROUTE_GROUPS: RouteGroupConfig[] = [
         feature: Feature.CALIBRATION_TORQUE,
         label:{ es:'Calibración Torque', en:'Calibration Torque' },
         icon: FiTarget
+      },
+      {
+        path:'/calibration/history',
+        feature: Feature.ADMIN,
+        label:{ es:'Historial de Calibración', en:'Calibration History' },
+        icon: FaHistory
       },
       {
         path:'/admin',

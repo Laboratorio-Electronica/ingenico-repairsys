@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 interface User {
   isAuth: boolean;
+  userId: string; // 🔥 CAMBIO
   username: string;
   role: string;
 }
