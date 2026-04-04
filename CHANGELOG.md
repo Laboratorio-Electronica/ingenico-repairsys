@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/Laboratorio-Electronica/ingenico-repairsys/compare/repair-sys-v1.1.0...repair-sys-v2.0.0) (2026-04-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* **calibration-torque:** calibration torque API contract changed (DTO and request payload)
+
+### Features
+
+* **calibration-torque:** add calibration torque history and backend improvements ([1f67b24](https://github.com/Laboratorio-Electronica/ingenico-repairsys/commit/1f67b249f35bfcfb8bcfbab58e824fa56a87f002))
+
 ## [1.1.0](https://github.com/Laboratorio-Electronica/ingenico-repairsys/compare/repair-sys-v1.0.0...repair-sys-v1.1.0) (2026-04-03)
 
 
