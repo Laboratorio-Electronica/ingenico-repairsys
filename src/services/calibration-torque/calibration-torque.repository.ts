@@ -1,4 +1,4 @@
-import { CreateCalibrationTorqueDTO } from "@/infrastructure/calibration-torque/calibration-torque.create.dto";
+import { CreateCalibrationTorqueDB, CreateCalibrationTorqueDTO } from "@/infrastructure/calibration-torque/calibration-torque.create.dto";
 import { UpdateCalibrationTorqueDTO } from "@/infrastructure/calibration-torque/calibration-torque.update.dto";
 import { CalibrationTorque } from "@/models";
 
@@ -27,7 +27,7 @@ export async function findCalibrationTorqueById(id: string) {
   return CalibrationTorque.findById(id)
 }
 
-export async function createCalibrationTorque(data: CreateCalibrationTorqueDTO) {
+export async function createCalibrationTorque(data: CreateCalibrationTorqueDB) {
   return CalibrationTorque.create(data);
 }
 

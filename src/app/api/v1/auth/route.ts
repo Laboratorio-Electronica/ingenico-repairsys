@@ -22,6 +22,7 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(
     {
       isAuth: true,
+      userId: session.userId,
       username: session.username,
       role: session.role,
     },

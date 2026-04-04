@@ -72,28 +72,56 @@ const TorqueClient = () => {
     setResultado(diff <= torqueSelected.tolerance);
   };
 
+  // const guardar = async () => {
+  //   if (!torqueSelected) return;
+
+  //   await fetch("/api/v1/calibration/torque", {
+  //     method: "POST",
+  //     headers: {"Content-Type": "application/json"},
+  //     body: JSON.stringify({
+  //       technician: user.username,
+  //       workstationId: workstation.id,
+  //       screwdriverId: screwdriverSelected?.id,
+  //       modelId: modelSelected?.id,
+  //       torqueSpecId: torqueSelected.id,
+  //       expectedTorque: torqueSelected.torque,
+  //       appliedTorque,
+  //       tolerance: torqueSelected.tolerance,
+  //       isCorrect: resultado,
+  //       observations: observaciones,
+  //     }),
+  //   });
+
+  //   alert("Calibración guardada");
+  // };
+  // console.log(user)
+
   const guardar = async () => {
-    if (!torqueSelected) return;
+  if (!torqueSelected || !appliedTorque) return;
 
-    await fetch("/api/v1/calibration/torque", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        technician: user.username,
-        workstationId: workstation.id,
-        screwdriverId: screwdriverSelected?.id,
-        modelId: modelSelected?.id,
-        torqueSpecId: torqueSelected.id,
-        expectedTorque: torqueSelected.torque,
-        appliedTorque,
-        tolerance: torqueSelected.tolerance,
-        isCorrect: resultado,
-        observations: observaciones,
-      }),
-    });
+  await fetch("/api/v1/calibration/torque", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      technicianId: user.userId, // 🔥 CAMBIO
 
-    alert("Calibración guardada");
-  };
+      workstationId: workstation.id,
+      screwdriverId: screwdriverSelected?.id,
+      modelId: modelSelected?.id,
+      torqueSpecId: torqueSelected.id,
+
+      expectedTorque: torqueSelected.torque,
+      appliedTorque,
+      tolerance: torqueSelected.tolerance,
+
+      captureMethod: "manual", // 🔥 o "scanner" si viene del lector
+
+      observations: observaciones,
+    }),
+  });
+
+  alert("Calibración guardada");
+};
 
   const limpiar = () => {
     setResultado(null);
